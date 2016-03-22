@@ -2,8 +2,17 @@
   include 'inc/config.php';
   include 'inc/header.php';
   /* Pegar a URL atual */
-    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
     $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+  /* Query */
+  $query = json_decode('{}');
+
+  foreach ($_GET as $key=>$value) {
+    $query = json_decode('{"'.$key.'":"'.$value.'"}');
+  }
+
+print_r($query);
+
   /* Pagination variables */
     $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
     $limit = 15;
@@ -12,18 +21,15 @@
     $prev = ($page - 1);
     $sort = array('facebook_url_total' => -1);
   /* Consultas */
-    $query = '';
-    $cursor = $c->find()->skip($skip)->limit($limit)->sort($sort);
+    $cursor = $c->find($query)->skip($skip)->limit($limit)->sort($sort);
     $total = $cursor->count();
     /* Function to generate facets */
     function generateFacet($url, $c, $query, $facet_name, $sort_name, $sort_value, $facet_display_name, $limit)
     {
         $aggregate_facet = array(
-        /*
         array(
           '$match'=>$query
         ),
-        */
         array(
           '$unwind' => $facet_name,
         ),
@@ -123,7 +129,7 @@
     <div class="image">
       <h4 class="ui center aligned icon header">
         <i class="circular file icon"></i>
-        <a href="result.php?tipo=<?php echo $r['type'];?>"><?php echo $r['type'];?></a>
+        <a href="result.php?type=<?php echo $r['type'];?>"><?php echo $r['type'];?></a>
       </h4>
     </div>
     <div class="content">
@@ -132,7 +138,7 @@
     <div class="extra">
     <?php if (!empty($r['authors'])): ?>
       <?php foreach ($r['authors'] as $autores): ?>
-        <div class="ui label" style="color:black;"><i class="user icon"></i><a href="result.php?autor=<?php echo $autores;?>"><?php echo $autores;?></a></div>
+        <div class="ui label" style="color:black;"><i class="user icon"></i><a href="result.php?authors=<?php echo $autores;?>"><?php echo $autores;?></a></div>
       <?php endforeach;?>
     <?php endif; ?>
   </div>
