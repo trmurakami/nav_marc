@@ -1,3 +1,7 @@
+# Copy 041 - Idioma
+marc_map('041a','language.$append')
+# Copy 044 - País
+marc_map('044a','country')
 #- Title
 marc_map('245ab','title', join:': ')
 replace_all('title','\[(.*)\]','$1')
@@ -18,6 +22,7 @@ marc_map('700a','authors.$append')
 marc_map('773t','ispartof')
 # Copy 773 - ISSN
 marc_map('773x','issn_part')
+split_field("issn_part","; ")
 # Copy 945b - Tipo
 marc_map('945b','type')
 # Copy 946e - Unidade USP
@@ -28,6 +33,8 @@ marc_map('946eg','departamento.$append',join:'/')
 marc_map('650[ 7]a','subject.$append')
 # Copy 945j - Data
 marc_map('945j','year')
+# Copy 945j - Internacionalização
+marc_map('945l','internacionalizacao')
 # Copy 946a - Autor USP
 marc_map('946a','authorUSP')
 # Remover record
