@@ -1,2 +1,20 @@
-# Copy all 245 subfields into the title hash
-marc_map('245','title') 
+#- Title
+marc_map('245ab','title', join:': ')
+replace_all('title','\[(.*)\]','$1')
+replace_all('title','((\s+\W\s*)+|\.)$','')
+copy_field('title','title_sort')
+replace_all('title_sort','\W+','')
+substring('title_sort',0,50)
+downcase('title_sort')
+copy_field('title','json.title')
+marc_map('246','json.title_remainder', join:' ')
+marc_map('245a','title_short')
+replace_all('title_short','((\s+\W\s*)+|\.)$','')
+# Copy the 100 subfields into the autores array
+marc_map('100a','authors.$append')
+# Copy the 700 subfields into the autores array
+marc_map('700a','authors.$append')
+# Copy 945b - Tipo
+marc_map('945b','type')
+# Copy 946e - Unidade USP
+marc_map('946e','unidadeUSP.$append')
