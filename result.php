@@ -25,7 +25,7 @@
     $skip = ($page - 1) * $limit;
     $next = ($page + 1);
     $prev = ($page - 1);
-    $sort = array('facebook_url_total' => -1);
+    $sort = array('year' => -1);
   /* Consultas */
     $cursor = $c->find($query)->skip($skip)->limit($limit)->sort($sort);
     $total = $cursor->count();
@@ -102,6 +102,8 @@
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
         generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
+        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
+        generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
         generateFacet($url, $c, $query, '$year', "_id", -1, 'Ano de publicação', 50);
       ?>
     </div>
@@ -140,11 +142,14 @@
     <div class="image">
       <h4 class="ui center aligned icon header">
         <i class="circular file icon"></i>
+        <?php if (!empty($r['ispartof'])): ?>
+        <a href="result.php?ispartof=<?php echo $r["ispartof"];?>"><?php echo $r["ispartof"];?></a> |
+        <?php endif; ?>
         <a href="result.php?type=<?php echo $r['type'];?>"><?php echo $r['type'];?></a>
       </h4>
     </div>
     <div class="content">
-      <a class="header"><?php echo $r['title'];?></a>
+      <a class="header"><?php echo $r['title'];?> (<?php echo $r["year"]; ?>)</a>
     <!--List authors -->
     <div class="extra">
     <?php if (!empty($r['authors'])): ?>

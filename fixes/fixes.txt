@@ -14,6 +14,10 @@ replace_all('title_short','((\s+\W\s*)+|\.)$','')
 marc_map('100a','authors.$append')
 # Copy the 700 subfields into the autores array
 marc_map('700a','authors.$append')
+# Copy 773 - É parte de
+marc_map('773t','ispartof')
+# Copy 773 - ISSN
+marc_map('773x','issn_part')
 # Copy 945b - Tipo
 marc_map('945b','type')
 # Copy 946e - Unidade USP
