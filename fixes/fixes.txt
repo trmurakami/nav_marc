@@ -1,0 +1,2 @@
+# Copy all 245 subfields into the title hash
+marc_map('245','title') 
