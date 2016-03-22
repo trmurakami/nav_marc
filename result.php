@@ -2,7 +2,12 @@
   include 'inc/config.php';
   include 'inc/header.php';
   /* Pegar a URL atual */
+  if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
     $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+  }
+  else {
+    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
+  }
     $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
   /* Query */
   if (empty($_GET)) {
@@ -14,9 +19,6 @@
       $query[$key] = $value;
     }
   }
-
-print_r($query);
-
   /* Pagination variables */
     $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
     $limit = 15;
