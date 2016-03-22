@@ -2,13 +2,17 @@
   include 'inc/config.php';
   include 'inc/header.php';
   /* Pegar a URL atual */
-    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
+    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
     $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
   /* Query */
-  $query = json_decode('{}');
-
-  foreach ($_GET as $key=>$value) {
-    $query = json_decode('{"'.$key.'":"'.$value.'"}');
+  if (empty($_GET)) {
+    $query = json_decode('{}');
+  }
+  else {
+    $query = array();
+    foreach ($_GET as $key=>$value) {
+      $query[$key] = $value;
+    }
   }
 
 print_r($query);
@@ -90,8 +94,13 @@ print_r($query);
         </div>
       <?php
       /* Gerar facetas */
-        generateFacet($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 20);
-        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP', 20);
+        generateFacet($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50);
+        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP', 50);
+        generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento', 50);
+        generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
+        generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
+        generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
+        generateFacet($url, $c, $query, '$year', "_id", -1, 'Ano de publicação', 50);
       ?>
     </div>
   </div>
@@ -141,6 +150,20 @@ print_r($query);
         <div class="ui label" style="color:black;"><i class="user icon"></i><a href="result.php?authors=<?php echo $autores;?>"><?php echo $autores;?></a></div>
       <?php endforeach;?>
     <?php endif; ?>
+  </div>
+  <div class="extra">
+    <?php if (!empty($r["subject"])): ?>
+      <?php foreach ($r["subject"] as $assunto): ?>
+        <div class="ui label" style="color:black;"><i class="globe icon"></i><a href="result.php?subject=<?php echo $assunto;?>"><?php echo $assunto;?></a></div>
+      <?php endforeach;?>
+    <?php endif; ?>
+  <!--
+  <a href="< ?php echo $r["url_principal"];?>">
+  <div class="ui right floated primary button">
+    Acesso online
+    <i class="right chevron icon"></i>
+  </div></a>
+  -->
   </div>
   </div>
   </div>

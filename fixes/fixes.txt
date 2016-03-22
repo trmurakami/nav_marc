@@ -7,7 +7,7 @@ replace_all('title_sort','\W+','')
 substring('title_sort',0,50)
 downcase('title_sort')
 copy_field('title','json.title')
-marc_map('246','json.title_remainder', join:' ')
+marc_map('246','json.title_remainder', join:': ')
 marc_map('245a','title_short')
 replace_all('title_short','((\s+\W\s*)+|\.)$','')
 # Copy the 100 subfields into the autores array
@@ -18,3 +18,13 @@ marc_map('700a','authors.$append')
 marc_map('945b','type')
 # Copy 946e - Unidade USP
 marc_map('946e','unidadeUSP.$append')
+# Copy 946eg - Unidade USP / Departamento
+marc_map('946eg','departamento.$append',join:'/')
+# Copy 650 - Assunto
+marc_map('650[ 7]a','subject.$append')
+# Copy 945j - Data
+marc_map('945j','year')
+# Copy 946a - Autor USP
+marc_map('946a','authorUSP')
+# Remover record
+remove_field("record")
