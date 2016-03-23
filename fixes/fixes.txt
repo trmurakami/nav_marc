@@ -1,8 +1,14 @@
-# Copy 041 - Idioma
+# 001 - Id
+marc_map('001','sysno')
+# 024a2 - DOI
+if marc_match('024[7]2','DOI')
+  marc_map('024[7]a','doi.$append')
+end
+# 041 - Idioma
 marc_map('041a','language.$append')
-# Copy 044 - País
+# 044 - País
 marc_map('044a','country')
-#- Title
+#- 245 - Titulo
 marc_map('245ab','title', join:': ')
 replace_all('title','\[(.*)\]','$1')
 replace_all('title','((\s+\W\s*)+|\.)$','')
@@ -14,28 +20,47 @@ copy_field('title','json.title')
 marc_map('246','json.title_remainder', join:': ')
 marc_map('245a','title_short')
 replace_all('title_short','((\s+\W\s*)+|\.)$','')
-# Copy the 100 subfields into the autores array
+# 100 - Autores
 marc_map('100a','authors.$append')
-# Copy the 700 subfields into the autores array
+# 650 - Assunto
+marc_map('650[ 7]a','subject.$append')
+# 700 - Autores
 marc_map('700a','authors.$append')
-# Copy 773 - É parte de
+# 773t - É parte de
 marc_map('773t','ispartof')
-# Copy 773 - ISSN
+# 773x - ISSN
 marc_map('773x','issn_part')
 split_field("issn_part","; ")
-# Copy 945b - Tipo
+
+# 856 - Texto completo
+if marc_match('8563','Documento completo')
+  marc_map('856[41]a','url.$append')
+end
+if marc_match('8563','Base Scielo')
+  marc_map('856[41]a','url.$append')
+end
+if marc_match('856[4]3','DOI')
+  marc_map('856[4]a','doi.$append')
+end
+
+# 945b - Tipo
 marc_map('945b','type')
-# Copy 946e - Unidade USP
-marc_map('946e','unidadeUSP.$append')
-# Copy 946eg - Unidade USP / Departamento
-marc_map('946eg','departamento.$append',join:'/')
-# Copy 650 - Assunto
-marc_map('650[ 7]a','subject.$append')
-# Copy 945j - Data
+# 945j - Data
 marc_map('945j','year')
-# Copy 945j - Internacionalização
+# 945l - Internacionalização
 marc_map('945l','internacionalizacao')
-# Copy 946a - Autor USP
+# 946a - Autor USP
 marc_map('946a','authorUSP')
+# 946e - Unidade USP
+marc_map('946e','unidadeUSP.$append')
+# 946eg - Unidade USP / Departamento
+marc_map('946eg','departamento.$append',join:'/')
+#- Year cleanup
+   replace_all('year','^(?<=-)?0+','')
+   unless all_match('year','^-?([0-9]|[123456789][0-9]+)$')
+       remove_field('year')
+   end
+# Delete all the empty fields
+vacuum()
 # Remover record
 remove_field("record")

@@ -155,7 +155,7 @@
       </h4>
     </div>
     <div class="content">
-      <a class="header"><?php echo $r['title'];?> (<?php echo $r["year"]; ?>)</a>
+      <a class="header" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['sysno'];?>"><?php echo $r['title'];?> (<?php echo $r["year"]; ?>)</a>
     <!--List authors -->
     <div class="extra">
     <?php if (!empty($r['authors'])): ?>
@@ -170,13 +170,13 @@
         <div class="ui label" style="color:black;"><i class="globe icon"></i><a href="result.php?subject=<?php echo $assunto;?>"><?php echo $assunto;?></a></div>
       <?php endforeach;?>
     <?php endif; ?>
-  <!--
-  <a href="< ?php echo $r["url_principal"];?>">
-  <div class="ui right floated primary button">
-    Acesso online
-    <i class="right chevron icon"></i>
-  </div></a>
-  -->
+  <?php if (!empty($r["doi"])): ?>
+    <a href="http://dx.doi.org/<?php echo $r["doi"][0];?>">
+    <div class="ui right floated primary button">
+      Acesso online
+      <i class="right chevron icon"></i>
+    </div></a>
+  <?php endif; ?>
   </div>
   </div>
   </div>
