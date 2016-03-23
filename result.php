@@ -49,7 +49,8 @@
           '$sort' => array($sort_name => $sort_value),
         ),
       );
-        $facet = $c->aggregate($aggregate_facet);
+      $options = array("allowDiskUse" => true);
+        $facet = $c->aggregate($aggregate_facet,$options);
 
         echo '<div class="item">';
         echo '<a class="active title"><i class="dropdown icon"></i>'.$facet_display_name.'</a>';
@@ -100,7 +101,9 @@
         generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP', 50);
         generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento', 50);
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
+        if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSP') !== false) {
         generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
+        }
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
         generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
