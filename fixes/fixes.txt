@@ -5,7 +5,9 @@ if marc_match('024[7]2','DOI')
   marc_map('024[7]a','doi.$append')
 end
 # 041 - Idioma
-marc_map('041a','language.$append')
+marc_map('041a','language.$append',join:'###')
+split_field("language","###")
+
 # 044 - País
 marc_map('044a','country')
 #- 245 - Titulo
@@ -50,11 +52,21 @@ marc_map('945j','year')
 # 945l - Internacionalização
 marc_map('945l','internacionalizacao')
 # 946a - Autor USP
-marc_map('946a','authorUSP')
-# 946e - Unidade USP
+marc_map('946a','authorUSP.$append')
+# 946a - Número USP
+marc_map('946be','codpes.$append',join:'/')
+# 946a - Número USP - Busca
+marc_map('946b','codpesbusca.$append')
+# 946e - Unidade USP - Participações
 marc_map('946e','unidadeUSP.$append')
-# 946eg - Unidade USP / Departamento
+# Unidade USP - Trabalhos
+copy_field("unidadeUSP","unidadeUSPtrabalhos")
+uniq(unidadeUSPtrabalhos)
+# 946eg - Unidade USP / Departamento - Participações
 marc_map('946eg','departamento.$append',join:'/')
+# Unidade USP / Departamento - Trabalhos
+copy_field("departamento","departamentotrabalhos")
+uniq(departamentotrabalhos)
 #- Year cleanup
    replace_all('year','^(?<=-)?0+','')
    unless all_match('year','^-?([0-9]|[123456789][0-9]+)$')

@@ -1,47 +1,45 @@
 <?php
+$tpTitle="BDPI USP - Biblioteca Digital da Produção Intelectual da Universidade de São Paulo";
+?>
 
+<?php
   include 'inc/config.php';
   include 'inc/header.php';
-/* Cria as consultas para o aggregate */
-
-function generateFacetInit($c, $facet_name, $sort_name, $sort_value, $facet_display_name, $limit, $link)
-{
-    $aggregate_facet_init = array(
-    array(
-      '$unwind' => $facet_name,
-    ),
-    array(
-      '$group' => array(
-        '_id' => $facet_name,
-        'count' => array('$sum' => 1),
-        ),
-    ),
-    array(
-      '$sort' => array($sort_name => $sort_value),
-    ),
-  );
-
-    $facet_init = $c->aggregate($aggregate_facet_init);
-
-    echo '<h3><a href="'.$link.'">'.$facet_display_name.'</a></h3>';
-    echo '<div class="ui horizontal list">';
-    $i = 0;
-    foreach ($facet_init['result'] as $facets) {
-        echo '<div class="item">
-        <div class="content">
-        <div class="ui labeled button" tabindex="0">
-        <div class="header">
-          <a href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a>
-        </div>
-        ('.$facets['count'].')
-        </div></div>
-        </div>';
-        if (++$i > $limit) {
-            break;
-        }
-    };
-    echo '</div>';
-};
-
-generateFacetInit($c, '$unidadeUSP', '_id', 1, 'Unidade USP', 100, '#');
+  include_once 'inc/functions.php';
 ?>
+
+
+    <div class="ui text container">
+      <div class="overlay">
+        <div class="ui labeled icon vertical menu">
+          <a class="item"><i class="twitter icon"></i> Tweet</a>
+          <a class="item"><i class="facebook icon"></i> Share</a>
+        </div>
+      </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo luctus lacus, in laoreet erat pretium sed. Praesent ornare in erat sit amet sollicitudin. Vivamus et quam in lorem iaculis porta a posuere augue. Nam nec lorem pulvinar eros bibendum varius. Duis interdum justo in velit aliquam, vitae auctor nisl placerat. Nullam maximus nisl non ullamcorper gravida. Duis gravida urna non risus ultricies tristique. Maecenas ullamcorper vel justo at tempus. Quisque imperdiet vitae erat ac commodo. Vivamus et interdum risus. Ut vitae mollis tortor, non tincidunt justo. Etiam sollicitudin turpis metus. Sed cursus gravida est non tristique. Duis quis diam et nisi euismod rhoncus.
+
+      Praesent neque dolor, commodo vitae justo vitae, suscipit dignissim velit. Nunc euismod porta enim et dapibus. Pellentesque volutpat justo sed ornare malesuada. Suspendisse porta dolor vitae nunc ornare, in facilisis ligula mattis. In tellus tortor, mollis et augue ut, bibendum dignissim orci. Praesent tincidunt sagittis mollis. Vestibulum dictum magna in accumsan lobortis. In dignissim nulla facilisis odio lobortis dignissim. Suspendisse felis nibh, viverra et pretium a, rutrum sit amet risus. Integer commodo fringilla sem, scelerisque accumsan dolor hendrerit condimentum.</p>
+
+      <div class="ui vertical stripe segment" id="search">
+          <h3 class="ui header" >Buscar</h3>
+          <form class="ui form" role="form" action="result.php" method="get">
+            <div class="ui form">
+              <div class="field">
+                <label>Número USP</label>
+                <input type="text" name="codpesbusca">
+              </div>
+              <button type="submit" id="s" class="ui large button">Buscar</button>
+            </div>
+          </form>
+      </div>
+      <?php
+        generateUnidadeUSPInit($c, '$unidadeUSPtrabalhos', '_id', 1, 'Unidade USP', 100, '#');
+      ?>
+
+    </div>
+    <?php
+      include 'inc/footer.php';
+    ?>
+
+</body>
+</html>

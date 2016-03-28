@@ -1,23 +1,26 @@
 <?php
+$tpTitle="BDPI USP - Resultado da Busca";
+?>
+
+<?php
   include 'inc/config.php';
   include 'inc/header.php';
+  include_once 'inc/functions.php';
   /* Pegar a URL atual */
   if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
-    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-  }
-  else {
-    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
+      $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+  } else {
+      $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
   }
     $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
   /* Query */
   if (empty($_GET)) {
-    $query = json_decode('{}');
-  }
-  else {
-    $query = array();
-    foreach ($_GET as $key=>$value) {
-      $query[$key] = $value;
-    }
+      $query = json_decode('{}');
+  } else {
+      $query = array();
+      foreach ($_GET as $key => $value) {
+          $query[$key] = $value;
+      }
   }
   /* Pagination variables */
     $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
@@ -29,50 +32,12 @@
   /* Consultas */
     $cursor = $c->find($query)->skip($skip)->limit($limit)->sort($sort);
     $total = $cursor->count();
-    /* Function to generate facets */
-    function generateFacet($url, $c, $query, $facet_name, $sort_name, $sort_value, $facet_display_name, $limit)
-    {
-        $aggregate_facet = array(
-        array(
-          '$match'=>$query
-        ),
-        array(
-          '$unwind' => $facet_name,
-        ),
-        array(
-          '$group' => array(
-            '_id' => $facet_name,
-            'count' => array('$sum' => 1),
-            ),
-        ),
-        array(
-          '$sort' => array($sort_name => $sort_value),
-        ),
-      );
-      $options = array("allowDiskUse" => true);
-        $facet = $c->aggregate($aggregate_facet,$options);
 
-        echo '<div class="item">';
-        echo '<a class="active title"><i class="dropdown icon"></i>'.$facet_display_name.'</a>';
-        echo '<div class="content">';
-        echo '<div class="ui list">';
-        $i = 0;
-        foreach ($facet['result'] as $facets) {
-            echo '<div class="item">';
-            echo '<a href="'.$url.'&'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a><span> ('.$facets['count'].')</span>';
-            echo '</div>';
-            if (++$i > $limit) {
-                break;
-            }
-        };
-        echo   '</div>
-          </div>
-      </div>';
-    }
 ?>
 </head>
 <body>
-  <div class="ui two column stackable grid">
+  <div class="ui container">
+  <div class="ui main two column stackable grid">
     <div class="four wide column">
       <div class="ui fluid vertical accordion menu">
         <div class="item">
@@ -98,16 +63,20 @@
       <?php
       /* Gerar facetas */
         generateFacet($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50);
-        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP', 50);
-        generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento', 50);
+        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 100);
+        generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 100);
+        generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 50);
+        generateFacet($url, $c, $query, '$departamentotrabalhos', 'count', -1, 'Departamento - Trabalhos', 50);
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
-        if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSP') !== false) {
-        generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
+        if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
+            generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
         }
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
+        generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
+        generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
         generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
-        generateFacet($url, $c, $query, '$year', "_id", -1, 'Ano de publicação', 50);
+        generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
         generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
         generateFacet($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50);
         generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
@@ -149,13 +118,13 @@
       <h4 class="ui center aligned icon header">
         <i class="circular file icon"></i>
         <?php if (!empty($r['ispartof'])): ?>
-        <a href="result.php?ispartof=<?php echo $r["ispartof"];?>"><?php echo $r["ispartof"];?></a> |
+        <a href="result.php?ispartof=<?php echo $r['ispartof'];?>"><?php echo $r['ispartof'];?></a> |
         <?php endif; ?>
         <a href="result.php?type=<?php echo $r['type'];?>"><?php echo $r['type'];?></a>
       </h4>
     </div>
     <div class="content">
-      <a class="header" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['sysno'];?>"><?php echo $r['title'];?> (<?php echo $r["year"]; ?>)</a>
+      <a class="header" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['sysno'];?>"><?php echo $r['title'];?> (<?php echo $r['year']; ?>)</a>
     <!--List authors -->
     <div class="extra">
     <?php if (!empty($r['authors'])): ?>
@@ -165,13 +134,13 @@
     <?php endif; ?>
   </div>
   <div class="extra">
-    <?php if (!empty($r["subject"])): ?>
-      <?php foreach ($r["subject"] as $assunto): ?>
+    <?php if (!empty($r['subject'])): ?>
+      <?php foreach ($r['subject'] as $assunto): ?>
         <div class="ui label" style="color:black;"><i class="globe icon"></i><a href="result.php?subject=<?php echo $assunto;?>"><?php echo $assunto;?></a></div>
       <?php endforeach;?>
     <?php endif; ?>
-  <?php if (!empty($r["doi"])): ?>
-    <a href="http://dx.doi.org/<?php echo $r["doi"][0];?>">
+  <?php if (!empty($r['doi'])): ?>
+    <a href="http://dx.doi.org/<?php echo $r['doi'][0];?>">
     <div class="ui right floated primary button">
       Acesso online
       <i class="right chevron icon"></i>
@@ -182,6 +151,12 @@
   </div>
 <?php endforeach;?>
 </div>
+</div>
+</div>
+</div>
+<?php
+  include 'inc/footer.php';
+?>
 <script>
 $('.ui.accordion')
   .accordion()
