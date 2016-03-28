@@ -28,12 +28,13 @@ marc_map('100a','authors.$append')
 marc_map('650[ 7]a','subject.$append')
 # 700 - Autores
 marc_map('700a','authors.$append')
+# 711 - Nome do evento
+marc_map('711a','evento.$append')
 # 773t - É parte de
 marc_map('773t','ispartof')
 # 773x - ISSN
 marc_map('773x','issn_part')
 split_field("issn_part","; ")
-
 # 856 - Texto completo
 if marc_match('8563','Documento completo')
   marc_map('856[41]a','url.$append')

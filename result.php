@@ -76,6 +76,7 @@ $tpTitle="BDPI USP - Resultado da Busca";
         generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
         generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
+        generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
         generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
         generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
         generateFacet($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50);

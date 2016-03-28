@@ -16,9 +16,9 @@ $tpTitle="BDPI USP - Biblioteca Digital da Produção Intelectual da Universidad
           <a class="item"><i class="facebook icon"></i> Share</a>
         </div>
       </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo luctus lacus, in laoreet erat pretium sed. Praesent ornare in erat sit amet sollicitudin. Vivamus et quam in lorem iaculis porta a posuere augue. Nam nec lorem pulvinar eros bibendum varius. Duis interdum justo in velit aliquam, vitae auctor nisl placerat. Nullam maximus nisl non ullamcorper gravida. Duis gravida urna non risus ultricies tristique. Maecenas ullamcorper vel justo at tempus. Quisque imperdiet vitae erat ac commodo. Vivamus et interdum risus. Ut vitae mollis tortor, non tincidunt justo. Etiam sollicitudin turpis metus. Sed cursus gravida est non tristique. Duis quis diam et nisi euismod rhoncus.
+      <p>A Biblioteca Digital da Produção Intelectual da Universidade de São Paulo (BDPI) é um sistema de gestão e disseminação da produção científica, acadêmica, técnica e artística gerada pelas pesquisas desenvolvidas na USP.
 
-      Praesent neque dolor, commodo vitae justo vitae, suscipit dignissim velit. Nunc euismod porta enim et dapibus. Pellentesque volutpat justo sed ornare malesuada. Suspendisse porta dolor vitae nunc ornare, in facilisis ligula mattis. In tellus tortor, mollis et augue ut, bibendum dignissim orci. Praesent tincidunt sagittis mollis. Vestibulum dictum magna in accumsan lobortis. In dignissim nulla facilisis odio lobortis dignissim. Suspendisse felis nibh, viverra et pretium a, rutrum sit amet risus. Integer commodo fringilla sem, scelerisque accumsan dolor hendrerit condimentum.</p>
+        A Resolução 6444, de 22 de outubro de 2012, estabelece e determina a BDPI como o instrumento oficial da Universidade de São Paulo para reunião da produção intelectual.</p><br/><br/><br/>
 
       <div class="ui vertical stripe segment" id="search">
           <h3 class="ui header" >Buscar</h3>
@@ -44,5 +44,12 @@ $('.activating.element')
   .popup()
 ;
 </script>
+<script>
+$(document).ready(function()
+{
+  $('div#logosusp').attr("style", "z-index:0;");
+});
+</script>
+
 </body>
 </html>

@@ -63,13 +63,13 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
     $facet_init = $c->aggregate($aggregate_facet_init);
 
     echo '<h3><a href="'.$link.'">'.$facet_display_name.'</a></h3>';
-    echo '<div class="ui six column grid">';
+    echo '<div class="ui seven column grid">';
     $i = 0;
     foreach ($facet_init['result'] as $facets) {
         echo '<div class="column">
               <div class="ui fluid image">
                 <a href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'">
-                <div class="floating ui mini teal label" style="overflow:hidden" data-title="'.trim($facets['_id']).'">
+                <div id="imagelogo" class="floating ui mini teal label" style="z-index:0;" data-title="'.trim($facets['_id']).'">
                 '.$facets['count'].'
                 </div>';
                 $file = 'inc/images/logosusp/'.$facets['_id'].'.jpg';

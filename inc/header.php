@@ -13,6 +13,8 @@
 <meta property="og:title"         content="<?php echo $tpTitle ?>" /></meta>
 <meta property="og:description"   content="" /></meta>
 <meta property="og:image"         content="" /></meta>
+<link type="image/x-icon" href="inc/images/faviconUSP.ico" rel="icon" />
+<link type="image/x-icon" href="inc/images/faviconUSP.ico" rel="shortcut icon" />
 
 <title><?php echo $tpTitle ?></title>
 
