@@ -35,11 +35,14 @@ $tpTitle="BDPI USP - Biblioteca Digital da Produção Intelectual da Universidad
       <?php
         generateUnidadeUSPInit($c, '$unidadeUSPtrabalhos', '_id', 1, 'Unidade USP', 100, '#');
       ?>
-
     </div>
     <?php
       include 'inc/footer.php';
     ?>
-
+<script>
+$('.activating.element')
+  .popup()
+;
+</script>
 </body>
 </html>
