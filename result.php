@@ -16,6 +16,10 @@ $tpTitle="BDPI USP - Resultado da Busca";
   /* Query */
   if (empty($_GET)) {
       $query = json_decode('{}');
+  } elseif (!empty($_GET["category"])) {
+      unset ($_GET["category"]);
+      $_GET["q"] = str_replace('"','\\"',$_GET["q"]);
+      $query = json_decode('{"$text": {"$search":"'.$_GET["q"].'"}}');
   } else {
       $query = array();
       foreach ($_GET as $key => $value) {
