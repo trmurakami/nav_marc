@@ -24,6 +24,21 @@ $tpTitle="BDPI USP - Busca avançada";
               </div>
           </form>
       </div>
+      <div class="ui vertical stripe segment" id="search">
+        <h3 class="ui header" >Assunto</h3>
+        <a href="#" onclick="creaPopup('inc/popterms/index.php?t=subject&f=assunto&v=http://143.107.154.55/pt-br/services.php&loadConfig=1'); return false;">Consultar o VCUSP</a>
+        <form class="ui form" role="form" action="result.php" method="get" name="assunto">
+          <div class="inline fields">
+            <div class="ui form">
+              <div class="field">
+                <label>Assunto</label>
+                <input type="text" name="subject">
+              </div>
+            </div>
+              <button type="submit" id="s" class="ui large button">Buscar</button>
+            </div>
+        </form>
+    </div>
     </div>
     <?php
       include 'inc/footer.php';
@@ -39,6 +54,16 @@ $(document).ready(function()
   $('div#logosusp').attr("style", "z-index:0;");
 });
 </script>
+<!-- ###### Script para criar o pop-up do popterms ###### -->
+<script>
+    function creaPopup(url)
+    {
+      tesauro=window.open(url,
+      "Tesauro",
+      "directories=no, menubar =no,status=no,toolbar=no,location=no,scrollbars=yes,fullscreen=no,height=600,width=450,left=500,top=0"
+      )
+    }
+ </script>
 
 </body>
 </html>

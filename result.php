@@ -20,10 +20,8 @@ $tpTitle="BDPI USP - Resultado da Busca";
       unset ($_GET["category"]);
       $q = str_replace('"','\\"',$_GET["q"]);
       unset ($_GET["q"]);
-      unset ($_REQUEST["q"]);
-      unset ($_REQUEST["category"]);
       $consult = "";
-      foreach ($_REQUEST as $key => $value) {
+      foreach ($_GET as $key => $value) {
         $consult .= '"'.$key.'":"'.$value.'",';
       }
       $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
@@ -164,6 +162,31 @@ $tpTitle="BDPI USP - Resultado da Busca";
   </div>
 <?php endforeach;?>
 </div>
+<?php
+/* Pagination - Start */
+echo '<div class="ui buttons">';
+if ($page > 1) {
+    echo '<form method="post" action="'.$escaped_url.'">';
+    echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
+    echo '<button type="submit" name="page" class="ui labeled icon button active" value="'.$prev.'"><i class="left chevron icon"></i>Anterior</button>';
+    if ($page * $limit < $total) {
+        echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
+    } else {
+        echo '<button class="ui right labeled icon button disabled">Próximo<i class="right chevron icon"></i></button>';
+    }
+    echo '</form>';
+} else {
+    if ($page * $limit < $total) {
+        echo '<form method="post" action="'.$escaped_url.'">';
+        echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
+        echo '<button class="ui labeled icon button disabled"><i class="left chevron icon"></i>Anterior</button>';
+        echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
+        echo '</form>';
+    }
+}
+echo '</div>';
+/* Pagination - End */
+?>
 </div>
 </div>
 </div>
