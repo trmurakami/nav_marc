@@ -59,6 +59,7 @@
 
   .main.menu {
     margin-top: 4em;
+    margin-bottom: 2em;
     border-radius: 0;
     border: none;
     box-shadow: none;
@@ -81,6 +82,11 @@
     transition: left 0.5s ease;
   }
 
+.ui.inverted.menu .item,
+.ui.inverted.menu .item>a:not(.ui) {
+  color: #333;
+}
+
   .ui.menu .item {
     padding: 0.65em;
   }
@@ -95,6 +101,10 @@
   }
   .overlay.fixed .menu {
     left: 800px;
+  }
+
+  .ui.menu.fixed {
+    width: 70%;
   }
 
   .text.container .left.floated.image {
@@ -228,13 +238,13 @@
          </div>
    </div>
   <!-- uspbarra - fim -->
-  <div class="ui main container">
-      <h1 class="ui header"><a href="index.php"><img src="inc/images/producao.usp.png"></a></h1>
-    </div>
+  <div  class="ui main container">
+      <h1 class="ui header"><a href="index.php"><img class="ui fluid image" src="inc/images/producao.usp.png"></a></h1></br>
+  </div>
 
+<div class="ui container">
+    <div class="ui inverted yellow borderless main menu">
 
-    <div class="ui inverted borderless main menu">
-      <div class="ui container">
         <div href="#" class="header item">
           <a href="index.php" class="item">Início</a>
         </div>
