@@ -5,8 +5,8 @@ if marc_match('024[7]2','DOI')
   marc_map('024[7]a','doi.$append')
 end
 # 041 - Idioma
-marc_map('041a','language.$append',join:'###')
-split_field("language","###")
+marc_map('041a','language.$append',join:'-')
+split_field('language','-')
 
 # 044 - País
 marc_map('044a','country')

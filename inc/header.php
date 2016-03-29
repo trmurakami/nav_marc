@@ -81,8 +81,15 @@
     transition: left 0.5s ease;
   }
 
+  .ui.menu .item {
+    padding: 0.65em;
+  }
+
+  .text.container {
+    margin-top: 2em;
+  }
+
   .main.menu.fixed {
-    background-color: #FFFFFF;
     border: 1px solid #DDD;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
   }
@@ -226,12 +233,12 @@
     </div>
 
 
-    <div class="ui borderless main menu">
+    <div class="ui inverted borderless main menu">
       <div class="ui container">
         <div href="#" class="header item">
           <a href="index.php" class="item">Início</a>
         </div>
-        <a href="#" class="item">Busca avançada</a>
+        <a href="advanced_search.php" class="item">Busca avançada</a>
         <a href="#" class="ui left floated dropdown item">
           Menu <i class="dropdown icon"></i>
           <div class="menu">
