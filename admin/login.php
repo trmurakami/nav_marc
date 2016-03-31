@@ -1,6 +1,7 @@
 <?php
-  include ('../inc/config_admin.php');
+  include ('../inc/config.php');
   include ('../inc/header.php');
+  include_once '../inc/functions.php';
 ?>
 <title><?php echo gettext("branch");?> - Login</title>
 <style type="text/css">
@@ -57,11 +58,6 @@
   </script>
 </head>
 <body>
-  <?php
-    include_once('../inc/analytics.php');
-    include '../inc/navbar.php';
-  ?>
-
 <div class="ui middle aligned center aligned grid">
   <div class="column">
     <h2 class="ui teal image header">
