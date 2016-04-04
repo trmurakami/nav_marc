@@ -1,8 +1,6 @@
 <?php
-$tpTitle="BDPI USP - Resultado da Busca";
-?>
+  $tpTitle="BDPI USP - Resultado da Busca";
 
-<?php
   include 'inc/config.php';
   include 'inc/header.php';
   include_once 'inc/functions.php';
@@ -134,7 +132,7 @@ $tpTitle="BDPI USP - Resultado da Busca";
       </h4>
     </div>
     <div class="content">
-      <a class="header" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['sysno'];?>"><?php echo $r['title'];?> (<?php echo $r['year']; ?>)</a>
+      <a class="header" href="single.php?_id=<?php echo $r['sysno'];?>"><?php echo $r['title'];?> (<?php echo $r['year']; ?>)</a> <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['sysno'];?>">DEDALUS</a>
     <!--List authors -->
     <div class="extra">
     <?php if (!empty($r['authors'])): ?>
