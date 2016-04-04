@@ -1,19 +1,16 @@
 <?php
-$tpTitle="BDPI USP - Biblioteca Digital da Produção Intelectual da Universidade de São Paulo";
+$tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universidade de São Paulo';
 ?>
-
 <?php
   include 'inc/config.php';
   include 'inc/header.php';
   include_once 'inc/functions.php';
 ?>
-
-
     <div class="ui text container">
       <div class="overlay">
         <div class="ui labeled icon vertical menu">
-          <a class="item" href="https://twitter.com/home?status=<?php echo "http://" . $_SERVER['HTTP_HOST'] ."".$_SERVER['REQUEST_URI'].""; ?>"><i class="twitter icon"></i> Tweet</a>
-          <a class="item" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo "http://" . $_SERVER['HTTP_HOST'] ."".$_SERVER['REQUEST_URI'].""; ?>"><i class="facebook icon"></i> Share</a>
+          <a class="item" href="https://twitter.com/home?status=<?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>"><i class="twitter icon"></i> Tweet</a>
+          <a class="item" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>"><i class="facebook icon"></i> Share</a>
         </div>
       </div>
       <p>A Biblioteca Digital da Produção Intelectual da Universidade de São Paulo (BDPI) é um sistema de gestão e disseminação da produção científica, acadêmica, técnica e artística gerada pelas pesquisas desenvolvidas na USP.</p>

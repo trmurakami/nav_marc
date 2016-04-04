@@ -63,7 +63,7 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
     $facet_init = $c->aggregate($aggregate_facet_init);
 
     echo '<h3><a href="'.$link.'">'.$facet_display_name.'</a></h3>';
-    echo '<div class="ui seven column grid">';
+    echo '<div class="ui five column grid">';
     $i = 0;
     foreach ($facet_init['result'] as $facets) {
         echo '<div class="column">
