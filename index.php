@@ -5,8 +5,6 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
   include 'inc/config.php';
   include 'inc/header.php';
   include_once 'inc/functions.php';
-
-  $test_connection = $m->getConnections();
 ?>
     <div class="ui text container">
       <div class="overlay">
@@ -37,7 +35,7 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
             </div>
         </div>
       <?php
-        if (!empty($test_connection)) {
+        if (!empty($m)) {
           generateUnidadeUSPInit($c, '$unidadeUSPtrabalhos', '_id', 1, 'Unidade USP', 100, '#');
         };
       ?>
