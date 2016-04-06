@@ -147,6 +147,18 @@
         <div class="ui label" style="color:black;"><i class="globe icon"></i><a href="result.php?subject=<?php echo $assunto;?>"><?php echo $assunto;?></a></div>
       <?php endforeach;?>
     <?php endif; ?>
+    <?php if (!empty($r['url'])): ?>
+      <?php foreach ($r['url'] as $url): ?>
+        <?php if ($url != ""): ?>
+        <a href="<?php echo $url;?>">
+          <div class="ui right floated primary button">
+            Acesso online
+            <i class="right chevron icon"></i>
+          </div>
+        </a>
+        <?php endif; ?>
+      <?php endforeach;?>
+    <?php endif; ?>
   <?php if (!empty($r['doi'])): ?>
     <a href="http://dx.doi.org/<?php echo $r['doi'][0];?>">
     <div class="ui right floated primary button">

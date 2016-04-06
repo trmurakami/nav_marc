@@ -5,8 +5,8 @@ if marc_match('024[7]2','DOI')
   marc_map('024[7]a','doi.$append')
 end
 # 041 - Idioma
-marc_map('041a','language.$append',join:'-')
-split_field("language","-")
+marc_map('041a','language',join:' - ')
+split_field('language',' - ')
 
 # 044 - País
 marc_map('044a','country')
@@ -36,15 +36,11 @@ marc_map('773t','ispartof')
 marc_map('773x','issn_part')
 split_field("issn_part","; ")
 # 856 - Texto completo
-if marc_match('8563','Documento completo')
-  marc_map('856[41]a','url.$append')
-end
-if marc_match('8563','Base Scielo')
-  marc_map('856[41]a','url.$append')
-end
-if marc_match('856[4]3','DOI')
-  marc_map('856[4]a','doi.$append')
-end
+
+marc_map('856[41]u','url',join:' - ')
+split_field('url',' - ')
+replace_all('url.*','.*?buscatextual.*','')
+replace_all('url.*','.*?lattes.*','')
 
 # 945b - Tipo
 marc_map('945b','type')
