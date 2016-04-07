@@ -7,9 +7,12 @@ end
 # 041 - Idioma
 marc_map('041a','language',join:' - ')
 split_field('language',' - ')
+lookup('language.*','/var/www/html/nav_marc/fixes/language.csv',-sep_char=>',')
 
 # 044 - País
 marc_map('044a','country')
+lookup('country','/var/www/html/nav_marc/fixes/country.csv',-sep_char=>',')
+
 #- 245 - Titulo
 marc_map('245ab','title', join:': ')
 replace_all('title','\[(.*)\]','$1')
@@ -24,10 +27,14 @@ marc_map('245a','title_short')
 replace_all('title_short','((\s+\W\s*)+|\.)$','')
 # 100 - Autores
 marc_map('100a','authors.$append')
+# 1009 - Colaboração
+marc_map('1009','colab.$append')
 # 650 - Assunto
 marc_map('650[ 7]a','subject.$append')
 # 700 - Autores
 marc_map('700a','authors.$append')
+# 7009 - Colaboração
+marc_map('7009','colab.$append')
 # 711 - Nome do evento
 marc_map('711a','evento.$append')
 # 773t - É parte de

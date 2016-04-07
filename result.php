@@ -78,6 +78,7 @@
         if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
             generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
         }
+        generateFacet($url, $c, $query, '$colab', 'count', -1, 'País dos autores externos à USP', 50);
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
         generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
         generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
