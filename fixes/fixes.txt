@@ -7,11 +7,11 @@ end
 # 041 - Idioma
 marc_map('041a','language',join:' - ')
 split_field('language',' - ')
-lookup('language.*','/var/www/html/nav_marc/fixes/language.csv',-sep_char=>',')
+lookup('language.*','../fixes/language.csv',-sep_char=>',')
 
 # 044 - País
 marc_map('044a','country')
-lookup('country','/var/www/html/nav_marc/fixes/country.csv',-sep_char=>',')
+lookup('country','../fixes/country.csv',-sep_char=>',')
 
 #- 245 - Titulo
 marc_map('245ab','title', join:': ')
