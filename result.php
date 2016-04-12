@@ -37,8 +37,14 @@
     $prev = ($page - 1);
     $sort = array('year' => -1);
   /* Consultas */
-    $cursor = $c->find($query)->skip($skip)->limit($limit)->sort($sort);
-    $total = $cursor->count();
+    $query_json = json_encode($query);
+    $query_new = json_decode('[{"$match":'.$query_json.'},{"$lookup":{"from": "producao_bdpi", "localField": "_id", "foreignField": "_id", "as": "bdpi"}},{"$skip":'.$skip.'},{"$limit":'.$limit.'},{"$sort":{"year":-1}}]');
+    $query_count = json_decode('[{"$match":'.$query_json.'},{"$group":{"_id":null,"count":{"$sum": 1}}}]');
+    $cursor = $c->aggregate($query_new);
+    $total_count = $c->aggregate($query_count);
+    $total = $total_count["result"][0]["count"];
+
+
 
 ?>
 </head>
@@ -121,7 +127,7 @@
   /* Pagination - End */
   ?>
 <div class="ui divided items">
-<?php foreach ($cursor as $r): ?>
+<?php foreach ($cursor["result"] as $r): ?>
   <div class="item">
     <div class="image">
       <h4 class="ui center aligned icon header">

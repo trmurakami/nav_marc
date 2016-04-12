@@ -40,6 +40,34 @@
             <?php endforeach;?>
           <?php endif; ?>
         </div>
+        <!--Unidades USP -->
+        <div class="ui middle aligned selection list">
+          <?php if (!empty($cursor["result"][0]['unidadeUSP'])): ?>
+            <h4>Unidades USP:</h4>
+            <?php foreach ($cursor["result"][0]['unidadeUSP'] as $unidadeUSP): ?>
+              <div class="item">
+                <i class="user icon"></i>
+                <div class="content">
+                  <a href="result.php?unidadeUSP=<?php echo $unidadeUSP;?>"><?php echo $unidadeUSP;?></a>
+                  </div>
+                </div>
+            <?php endforeach;?>
+          <?php endif; ?>
+        </div>
+        <!--Assuntos -->
+        <div class="ui middle aligned selection list">
+          <?php if (!empty($cursor["result"][0]['subject'])): ?>
+            <h4>Assuntos:</h4>
+            <?php foreach ($cursor["result"][0]['subject'] as $subject): ?>
+              <div class="item">
+                <i class="user icon"></i>
+                <div class="content">
+                  <a href="result.php?subject=<?php echo $subject;?>"><?php echo $subject;?></a>
+                  </div>
+                </div>
+            <?php endforeach;?>
+          <?php endif; ?>
+        </div>
       </div>
       <div class="ui bottom attached tab segment" data-tab="second">
         Second
