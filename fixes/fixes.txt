@@ -15,16 +15,6 @@ lookup('country','../fixes/country.csv',-sep_char=>',')
 
 #- 245 - Titulo
 marc_map('245ab','title', join:': ')
-replace_all('title','\[(.*)\]','$1')
-replace_all('title','((\s+\W\s*)+|\.)$','')
-copy_field('title','title_sort')
-replace_all('title_sort','\W+','')
-substring('title_sort',0,50)
-downcase('title_sort')
-copy_field('title','json.title')
-marc_map('246','json.title_remainder', join:': ')
-marc_map('245a','title_short')
-replace_all('title_short','((\s+\W\s*)+|\.)$','')
 # 100 - Autores
 marc_map('100a','authors.$append')
 # 1009 - Colaboração
