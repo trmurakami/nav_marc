@@ -64,7 +64,7 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
 
     echo '<h3><a href="'.$link.'">'.$facet_display_name.'</a></h3>';
     echo '<div class="ui relaxed horizontal list">
-    <div class="ui ten column doubling grid">';
+    <div class="ui ten column doubling grid" style="padding:15px;">';
     $i = 0;
     foreach ($facet_init['result'] as $facets) {
         echo '<div class="column"><div class="item">
