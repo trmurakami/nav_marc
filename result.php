@@ -1,5 +1,5 @@
 <?php
-  $tpTitle="BDPI USP - Resultado da Busca";
+  $tpTitle = 'BDPI USP - Resultado da Busca';
 
   include 'inc/config.php';
   include 'inc/header.php';
@@ -14,13 +14,13 @@
   /* Query */
   if (empty($_GET)) {
       $query = json_decode('{}');
-  } elseif (!empty($_GET["category"])) {
-      unset ($_GET["category"]);
-      $q = str_replace('"','\\"',$_GET["q"]);
-      unset ($_GET["q"]);
-      $consult = "";
+  } elseif (!empty($_GET['category'])) {
+      unset($_GET['category']);
+      $q = str_replace('"', '\\"', $_GET['q']);
+      unset($_GET['q']);
+      $consult = '';
       foreach ($_GET as $key => $value) {
-        $consult .= '"'.$key.'":"'.$value.'",';
+          $consult .= '"'.$key.'":"'.$value.'",';
       }
       $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
   } else {
@@ -42,14 +42,12 @@
     $query_count = json_decode('[{"$match":'.$query_json.'},{"$group":{"_id":null,"count":{"$sum": 1}}}]');
     $cursor = $c->aggregate($query_new);
     $total_count = $c->aggregate($query_count);
-    $total = $total_count["result"][0]["count"];
-
-
+    $total = $total_count['result'][0]['count'];
 
 ?>
 </head>
 <body>
-  <div class="ui container">
+  <div class="ui main container">
   <div class="ui main two column stackable grid">
     <div class="four wide column">
       <div class="ui fluid vertical accordion menu">
@@ -98,7 +96,7 @@
       ?>
     </div>
   </div>
-  <div class="ten wide column">
+  <div class="twelve wide column">
     <div class="page-header"><h3>Resultado da busca <small><?php print_r($total);?></small></h3></div>
 
   <?php
@@ -108,6 +106,7 @@
       echo '<form method="post" action="'.$escaped_url.'">';
       echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
       echo '<button type="submit" name="page" class="ui labeled icon button active" value="'.$prev.'"><i class="left chevron icon"></i>Anterior</button>';
+      echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
       if ($page * $limit < $total) {
           echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
       } else {
@@ -119,6 +118,7 @@
           echo '<form method="post" action="'.$escaped_url.'">';
           echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
           echo '<button class="ui labeled icon button disabled"><i class="left chevron icon"></i>Anterior</button>';
+          echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
           echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
           echo '</form>';
       }
@@ -127,7 +127,7 @@
   /* Pagination - End */
   ?>
 <div class="ui divided items">
-<?php foreach ($cursor["result"] as $r): ?>
+<?php foreach ($cursor['result'] as $r): ?>
   <div class="item">
     <div class="image">
       <h4 class="ui center aligned icon header">
@@ -136,10 +136,12 @@
         <a href="result.php?ispartof=<?php echo $r['ispartof'];?>"><?php echo $r['ispartof'];?></a> |
         <?php endif; ?>
         <a href="result.php?type=<?php echo $r['type'];?>"><?php echo $r['type'];?></a>
+        <br/><br/><br/>
+        <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['_id'];?>">Ver no Dedalus</a>
       </h4>
     </div>
     <div class="content">
-      <a class="header" href="single.php?_id=<?php echo $r['_id'];?>"><?php echo $r['title'];?> (<?php echo $r['year']; ?>)</a> <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['_id'];?>">DEDALUS</a>
+      <a class="header" href="single.php?_id=<?php echo $r['_id'];?>"><?php echo $r['title'];?> (<?php echo $r['year']; ?>)</a>
     <!--List authors -->
     <div class="extra">
     <?php if (!empty($r['authors'])): ?>
@@ -149,6 +151,13 @@
     <?php endif; ?>
   </div>
   <div class="extra">
+  <?php if (!empty($r['unidadeUSP'])): ?>
+    <?php foreach ($r['unidadeUSP'] as $unidadeUSP): ?>
+      <div class="ui label" style="color:black;"><i class="university icon"></i><a href="result.php?unidadeUSP=<?php echo $unidadeUSP;?>"><?php echo $unidadeUSP;?></a></div>
+    <?php endforeach;?>
+  <?php endif; ?>
+</div>
+  <div class="extra">
     <?php if (!empty($r['subject'])): ?>
       <?php foreach ($r['subject'] as $assunto): ?>
         <div class="ui label" style="color:black;"><i class="globe icon"></i><a href="result.php?subject=<?php echo $assunto;?>"><?php echo $assunto;?></a></div>
@@ -156,7 +165,8 @@
     <?php endif; ?>
     <?php if (!empty($r['url'])): ?>
       <?php foreach ($r['url'] as $url): ?>
-        <?php if ($url != ""): ?>
+        <?php if ($url != ''): ?>
+          <br/><br/>
         <a href="<?php echo $url;?>">
           <div class="ui right floated primary button">
             Acesso online
@@ -167,6 +177,7 @@
       <?php endforeach;?>
     <?php endif; ?>
   <?php if (!empty($r['doi'])): ?>
+    <br/><br/>
     <a href="http://dx.doi.org/<?php echo $r['doi'][0];?>">
     <div class="ui right floated primary button">
       Acesso online
@@ -186,6 +197,7 @@ if ($page > 1) {
     echo '<form method="post" action="'.$escaped_url.'">';
     echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
     echo '<button type="submit" name="page" class="ui labeled icon button active" value="'.$prev.'"><i class="left chevron icon"></i>Anterior</button>';
+    echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
     if ($page * $limit < $total) {
         echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
     } else {
@@ -197,6 +209,7 @@ if ($page > 1) {
         echo '<form method="post" action="'.$escaped_url.'">';
         echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
         echo '<button class="ui labeled icon button disabled"><i class="left chevron icon"></i>Anterior</button>';
+        echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
         echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
         echo '</form>';
     }

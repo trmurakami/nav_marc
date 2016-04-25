@@ -100,7 +100,7 @@
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
   }
   .overlay.fixed .menu {
-    left: 800px;
+    left: 1150px;
   }
 
   .ui.menu.fixed {
@@ -242,7 +242,7 @@
       <h1 class="ui header"><a href="index.php"><img class="ui fluid image" src="inc/images/producao.usp.png"></a></h1></br>
   </div>
 
-<div class="ui container">
+<div class="ui main container">
     <div class="ui inverted yellow borderless main menu">
 
         <div href="#" class="header item">
