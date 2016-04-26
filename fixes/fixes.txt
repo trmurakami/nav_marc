@@ -1,3 +1,4 @@
+random("part.rand4","4")
 # 001 - Id
 marc_map('001','sysno')
 # 024a2 - DOI

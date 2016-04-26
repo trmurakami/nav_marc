@@ -1,18 +1,15 @@
 <?php
-  include ('../inc/config.php');
-  include ('../inc/header.php');
-  include_once '../inc/functions.php';
+$tpTitle = 'Login - BDPI USP';
+?>
+<?php
+  include ('inc/config.php');
+  include ('inc/header.php');
+  include_once 'inc/functions.php';
 ?>
 <title><?php echo gettext("branch");?> - Login</title>
 <style type="text/css">
-    body {
-      background-color: #DADADA;
-    }
     body > .grid {
       height: 100%;
-    }
-    .image {
-      margin-top: -100px;
     }
     .column {
       max-width: 450px;
@@ -94,7 +91,7 @@
 
 
 <?php
-  include "../inc/footer.php";
+  include "inc/footer.php";
 ?>
 </body>
 </html>
