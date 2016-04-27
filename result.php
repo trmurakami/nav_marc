@@ -4,6 +4,15 @@
   include 'inc/config.php';
   include 'inc/header.php';
   include_once 'inc/functions.php';
+
+  /* Citeproc-PHP*/
+  include 'inc/citeproc-php/CiteProc.php';
+  $csl = file_get_contents('inc/citeproc-php/style/abnt.csl');
+  $lang = "br";
+  $citeproc = new citeproc($csl,$lang);
+  $mode = "reference";
+
+
   /* Pegar a URL atual */
   if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
       $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
@@ -97,6 +106,9 @@
     </div>
   </div>
   <div class="twelve wide column">
+
+
+
     <div class="page-header"><h3>Resultado da busca <small><?php print_r($total);?></small></h3></div>
 
   <?php
@@ -185,6 +197,89 @@
     </div></a>
     <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
   <?php endif; ?>
+  </div>
+  <div class="extra">
+    <h4>Como citar (ABNT)</h4>
+    <?php
+    $type = get_type($r['type']);
+    $author_array = array();
+    foreach ($r['authors'] as $autor_citation){
+
+      $array_authors = explode(',', $autor_citation);
+      $author_array[] = '{"family":"'.$array_authors[0].'","given":"'.$array_authors[1].'"}';
+    };
+    $authors = implode(",",$author_array);
+
+    if (!empty($r['ispartof'])) {
+      $container = '"container-title": "'.$r['ispartof'].'",';
+    } else {
+      $container = "";
+    };
+    if (!empty($r['doi'])) {
+      $doi = '"DOI": "'.$r['doi'][0].'",';
+    } else {
+      $doi = "";
+    };
+
+    if (!empty($r['url'])) {
+      $url = '"URL": "'.$r['url'][0].'",';
+    } else {
+      $url = "";
+    };
+
+    if (!empty($r['publisher'])) {
+      $publisher = '"publisher": "'.$r['publisher'].'",';
+    } else {
+      $publisher = "";
+    };
+
+    if (!empty($r['publisher-place'])) {
+      $publisher_place = '"publisher-place": "'.$r['publisher-place'].'",';
+    } else {
+      $publisher_place = "";
+    };
+
+    $volume = "";
+    $issue = "";
+    $page_ispartof = "";
+
+    if (!empty($r['ispartof_data'])) {
+      foreach ($r['ispartof_data'] as $ispartof_data) {
+        if (strpos($ispartof_data, 'v.') !== false) {
+          $volume = '"publisher": "'.$ispartof_data.'",';
+        } elseif (strpos($ispartof_data, 'n.') !== false) {
+          $issue = '"issue": "'.str_replace("n.","",$ispartof_data).'",';
+        } elseif (strpos($ispartof_data, 'p.') !== false) {
+          $page_ispartof = '"page": "'.str_replace("p.","",$ispartof_data).'",';
+        }
+      }
+    }
+
+    $data = json_decode('{
+                "title": "'.$r['title'].'",
+                "type": "'.$type.'",
+                '.$container.'
+                '.$doi.'
+                '.$url.'
+                '.$publisher.'
+                '.$publisher_place.'
+                '.$volume.'
+                '.$issue.'
+                '.$page_ispartof.'
+                "issued": {
+                    "date-parts": [
+                        [
+                            "'.$r['year'].'"
+                        ]
+                    ]
+                },
+                "author": [
+                    '.$authors.'
+                ]
+            }');
+    $output = $citeproc->render($data, $mode);
+    print_r($output)
+    ?>
   </div>
   </div>
   </div>

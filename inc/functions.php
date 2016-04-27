@@ -133,4 +133,20 @@ function generateFacet($url, $c, $query, $facet_name, $sort_name, $sort_value, $
 };
 
 
+/* Pegar o tipo de material */
+function get_type($material_type){
+  switch ($material_type) {
+  case "ARTIGO DE PERIODICO":
+      return "article-journal";
+      break;
+  case "PARTE DE MONOGRAFIA/LIVRO":
+      return "chapter";
+      break;
+  case "APRESENTACAO SONORA/CENICA/ENTREVISTA":
+      return "interview";
+      break;
+  }
+}
+
+
 ?>

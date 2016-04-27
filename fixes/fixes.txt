@@ -1,4 +1,4 @@
-random("part.rand4","4")
+#random("part.rand4","4")
 # 001 - Id
 marc_map('001','sysno')
 # 024a2 - DOI
@@ -16,6 +16,13 @@ lookup('country','../fixes/country.csv',-sep_char=>',')
 
 #- 245 - Titulo
 marc_map('245ab','title', join:': ')
+
+#- 260a - Imprenta - Local
+marc_map('260a','publisher-place')
+#- 260b - Imprenta - Editora
+marc_map('260b','publisher')
+
+
 # 100 - Autores
 marc_map('100a','authors.$append')
 # 1009 - Colaboração
@@ -32,6 +39,10 @@ marc_map('711a','evento.$append')
 marc_map('773t','ispartof')
 # 773x - ISSN
 marc_map('773x','issn_part')
+# 773h - Dados de publicação
+marc_map('773h','ispartof_data')
+split_field("ispartof_data",",")
+
 split_field("issn_part","; ")
 # 856 - Texto completo
 
