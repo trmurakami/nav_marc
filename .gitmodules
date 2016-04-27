@@ -1,0 +1,3 @@
+[submodule "citeproc-php"]
+	path = citeproc-php
+	url = https://github.com/gbv/citeproc-php.git
