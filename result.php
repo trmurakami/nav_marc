@@ -104,6 +104,12 @@
         generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
       ?>
     </div>
+    <div>
+      <form method="post" action="generate_pdf.php">
+        <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+        <button type="submit" name="page" class="ui icon button" value="teste">Gerar relatório</button>
+      </form>
+    </div>
   </div>
   <div class="twelve wide column">
 

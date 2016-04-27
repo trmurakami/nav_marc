@@ -145,6 +145,9 @@ function get_type($material_type){
   case "APRESENTACAO SONORA/CENICA/ENTREVISTA":
       return "interview";
       break;
+  case "TRABALHO DE EVENTO-RESUMO":
+      return "paper-conference";
+      break;
   }
 }
 
