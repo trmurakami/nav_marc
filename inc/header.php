@@ -239,10 +239,22 @@
    </div>
   <!-- uspbarra - fim -->
   <div  class="ui main container">
-      <h1 class="ui header"><a href="index.php"><img class="ui fluid image" src="inc/images/producao.usp.png"></a></h1></br>
+    <div class="ui two column stackable grid">
+      <div class="ten wide column">
+      <h1 class="ui header"><a href="index.php"><img class="ui fluid image" src="inc/images/producao.usp.png"></a></h1>
+    </div>
+    <div class="six wide column">
+      <p>
+        <b>Departamento Técnico do Sistema Integrado de Bibliotecas</b><br/>
+        Rua da Biblioteca, S/N - Complexo Brasiliana<br/>
+        05508-050 - Cidade Universitária, São Paulo, SP - Brasil<br/>
+        Tel: (0xx11) 2648-0948<br/>
+        E-mail: atendimento@sibi.usp.br
+      </p>
+    </div>
   </div>
 
-<div class="ui main container">
+
     <div class="ui inverted yellow borderless main menu">
 
         <div href="#" class="header item">
@@ -267,5 +279,26 @@
             <div class="item">Link Item</div>
           </div>
         </a>
+        <div class="right menu">
+          <div class="item">
+            <div class="ui transparent icon input">
+              <form class="form-inline pull-xs-right" action="result.php" method="get">
+              <i class="search icon"></i>
+              <input type="text" name="q" placeholder="Buscar em Títulos, Autores e Resumos">
+              <select class="ui dropdown" name="category" style="color:black;">
+                <option value="buscaindice">Título, autores e resumos</option>
+                <!-- <option value="altmetrics.references">Referências</option> -->
+                <!-- <option value="full_text">Texto completo dos artigos</option> -->
+                <!--<option value="autor">Nome do autor</option> -->
+                <!-- <option value="subject">Assunto</option> -->
+              </select>
+              <button class="ui button">Buscar</button>
+              </form>
+            </div>
+          </div>
+          <div class="item">
+            <a class="ui button" href="admin/login.php">Login</a>
+          </div>
+        </div>
       </div>
     </div>

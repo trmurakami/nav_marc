@@ -34,7 +34,7 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
         </form>
         </div>
     </div>
-    <?php get_last_records($c,10); ?>
+    <?php get_last_records($c,15); ?>
   </div>
   <div class="six wide column">
     <?php

@@ -172,7 +172,7 @@ function get_last_records($c,$number){
       };
     echo '</div>';
     echo '<div class="content">';
-    if (!empty($r['title']) && !empty($r['year'])){
+    if (!empty($r['title'])){
       echo '<a class="header" href="single.php?_id='.$r['_id'].'">'.$r['title'].' ('.$r['year'].')</a>';
     };
     echo '<div class="extra">';
