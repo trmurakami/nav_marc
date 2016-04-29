@@ -64,7 +64,7 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
 
     echo '<h3><a href="'.$link.'">'.$facet_display_name.'</a></h3>';
     echo '<div class="ui relaxed horizontal list">
-    <div class="ui ten column doubling grid" style="padding:15px;">';
+    <div class="ui four column doubling grid" style="padding:15px;">';
     $i = 0;
     foreach ($facet_init['result'] as $facets) {
         echo '<div class="column"><div class="item">
@@ -150,6 +150,44 @@ function get_type($material_type){
       break;
   }
 }
+
+/* Últimos cadastramentos */
+function get_last_records($c,$number){
+
+  $last_records = $c->find()->sort(array('_id'=>-1))->limit($number);
+  $file='';
+  echo '<h3>Últimos registros</h3>';
+  echo '<div class="ui divided items">';
+  foreach ($last_records as $r){
+    #print_r($r);
+    echo '<div class="item">
+            <div class="ui tiny image">';
+      if (!empty($r['unidadeUSP'])) {
+        $file = 'inc/images/logosusp/'.$r['unidadeUSP'][0].'.jpg';
+      }
+      if (file_exists($file)) {
+            echo '<img src="'.$file.'"></a>';
+        } else {
+            #echo ''.$r['unidadeUSP'].'</a>';
+      };
+    echo '</div>';
+    echo '<div class="content">';
+    if (!empty($r['title']) && !empty($r['year'])){
+      echo '<a class="header" href="single.php?_id='.$r['_id'].'">'.$r['title'].' ('.$r['year'].')</a>';
+    };
+    echo '<div class="extra">';
+    if (!empty($r['authors'])) {
+      foreach ($r['authors'] as $autores) {
+        echo '<div class="ui label" style="color:black;"><i class="user icon"></i><a href="result.php?authors='.$autores.'">'.$autores.'</a></div>';
+      }
+    };
+    echo '</div></div>';
+    echo '</div>';
+  }
+    echo '</div>';
+}
+echo '</div>';
+echo '</div>';
 
 
 ?>

@@ -162,6 +162,7 @@
       <a class="header" href="single.php?_id=<?php echo $r['_id'];?>"><?php echo $r['title'];?> (<?php echo $r['year']; ?>)</a>
     <!--List authors -->
     <div class="extra">
+    <h4>Autores:</h4>
     <?php if (!empty($r['authors'])): ?>
       <?php foreach ($r['authors'] as $autores): ?>
         <div class="ui label" style="color:black;"><i class="user icon"></i><a href="result.php?authors=<?php echo $autores;?>"><?php echo $autores;?></a></div>
@@ -169,6 +170,7 @@
     <?php endif; ?>
   </div>
   <div class="extra">
+  <h4>Unidades USP:</h4>
   <?php if (!empty($r['unidadeUSP'])): ?>
     <?php foreach ($r['unidadeUSP'] as $unidadeUSP): ?>
       <div class="ui label" style="color:black;"><i class="university icon"></i><a href="result.php?unidadeUSP=<?php echo $unidadeUSP;?>"><?php echo $unidadeUSP;?></a></div>
@@ -176,6 +178,7 @@
   <?php endif; ?>
 </div>
   <div class="extra">
+    <h4>Assuntos:</h4>
     <?php if (!empty($r['subject'])): ?>
       <?php foreach ($r['subject'] as $assunto): ?>
         <div class="ui label" style="color:black;"><i class="globe icon"></i><a href="result.php?subject=<?php echo $assunto;?>"><?php echo $assunto;?></a></div>
@@ -204,7 +207,7 @@
     <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
   <?php endif; ?>
   </div>
-  <div class="extra">
+  <div class="extra" style="color:black;">
     <h4>Como citar (ABNT)</h4>
     <?php
     $type = get_type($r['type']);
