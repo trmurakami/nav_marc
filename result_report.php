@@ -62,7 +62,7 @@
 
 <style type="text/css">
     .slice text {
-        font-size: 16pt;
+        font-size: 6pt;
         font-family: Arial;
     }
 </style>
@@ -70,7 +70,8 @@
 </head>
 <body>
   <div class="ui main container">
-    <div>
+    <div class="ui equal width grid">
+      <div class="column">
       <h3>Tipo de publicação</h3>
       <?php $type_mat = generateDataGraph($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
       <div id="chart"></div>
@@ -109,25 +110,131 @@
           return data[i].label;}
       		);
      </script>
-
-      <?php generateDataGraph($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
     </div>
-    <br/>
-    <div>
+
+    <div class="column">
       <h3>Unidade USP - Participações</h3>
-      <?php generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
-    </div>
-    <br/>
-    <div>
-      <h3>Unidade USP - Trabalhos</h3>
-      <?php generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
-    </div>
-    <br/>
-    <div>
-      <h3>Departamento - Participações</h3>
-      <?php generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
-    </div>
+      <?php $unidadeUSP_part = generateDataGraph($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
+      <div id="chart2"></div>
+      <script type="text/javascript">
+      var w = 400;
+      var h = 400;
+      var r = h/2;
+      var color = d3.scale.category20c();
 
+      var data = [<?= $unidadeUSP_part; ?>];
+
+
+      var vis = d3.select('#chart2').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
+      var pie = d3.layout.pie().value(function(d){return d.value;});
+
+      // declare an arc generator function
+      var arc = d3.svg.arc().outerRadius(r);
+
+      // select paths, use arc generator to draw
+      var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+      arcs.append("svg:path")
+          .attr("fill", function(d, i){
+              return color(i);
+          })
+          .attr("d", function (d) {
+              // log the result of the arc generator to show how cool it is :)
+              console.log(arc(d));
+              return arc(d);
+          });
+
+      // add the text
+      arcs.append("svg:text").attr("transform", function(d){
+            d.innerRadius = 0;
+            d.outerRadius = r;
+          return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
+          return data[i].label;}
+          );
+     </script>
+    </div>
+    </div>
+    <div class="ui equal width grid">
+      <div class="column">
+        <h3>Unidade USP - Trabalhos</h3>
+        <?php $unidadeUSP_part = generateDataGraph($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
+        <div id="chart3"></div>
+        <script type="text/javascript">
+        var w = 400;
+        var h = 400;
+        var r = h/2;
+        var color = d3.scale.category20c();
+
+        var data = [<?= $unidadeUSP_part; ?>];
+
+
+        var vis = d3.select('#chart3').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
+        var pie = d3.layout.pie().value(function(d){return d.value;});
+
+        // declare an arc generator function
+        var arc = d3.svg.arc().outerRadius(r);
+
+        // select paths, use arc generator to draw
+        var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+        arcs.append("svg:path")
+            .attr("fill", function(d, i){
+                return color(i);
+            })
+            .attr("d", function (d) {
+                // log the result of the arc generator to show how cool it is :)
+                console.log(arc(d));
+                return arc(d);
+            });
+
+        // add the text
+        arcs.append("svg:text").attr("transform", function(d){
+              d.innerRadius = 0;
+              d.outerRadius = r;
+            return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
+            return data[i].label;}
+            );
+       </script>
+      </div>
+      <div class="column">
+        <h3>Departamento - Participações</h3>
+        <?php $unidadeUSP_part = generateDataGraph($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
+        <div id="chart4"></div>
+        <script type="text/javascript">
+        var w = 400;
+        var h = 400;
+        var r = h/2;
+        var color = d3.scale.category20c();
+
+        var data = [<?= $unidadeUSP_part; ?>];
+
+
+        var vis = d3.select('#chart4').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
+        var pie = d3.layout.pie().value(function(d){return d.value;});
+
+        // declare an arc generator function
+        var arc = d3.svg.arc().outerRadius(r);
+
+        // select paths, use arc generator to draw
+        var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+        arcs.append("svg:path")
+            .attr("fill", function(d, i){
+                return color(i);
+            })
+            .attr("d", function (d) {
+                // log the result of the arc generator to show how cool it is :)
+                console.log(arc(d));
+                return arc(d);
+            });
+
+        // add the text
+        arcs.append("svg:text").attr("transform", function(d){
+              d.innerRadius = 0;
+              d.outerRadius = r;
+            return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
+            return data[i].label;}
+            );
+       </script>
+      </div>
+    </div>
 
   <div class="ui main two column stackable grid">
     <div class="four wide column">
