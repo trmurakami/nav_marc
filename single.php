@@ -70,7 +70,128 @@
         </div>
       </div>
       <div class="ui bottom attached tab segment" data-tab="second">
-        Second
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th>Campo</th>
+              <th>Indicador 1</th>
+              <th>Indicador 2</th>
+              <th>Sub-Campo</th>
+              <th>Conteúdo</th>
+            </tr>
+          </thead>
+        <tbody>
+        <?php foreach ($cursor["result"][0]["record"] as $fields){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[3].'';
+          echo '<td>'.$fields[4].'';
+          echo '</tr>';
+          if (!empty($fields[5])){
+            echo '<tr>';
+            echo '<td>'.$fields[0].'';
+            echo '<td>'.$fields[1].'';
+            echo '<td>'.$fields[2].'';
+            echo '<td>'.$fields[5].'';
+            echo '<td>'.$fields[6].'';
+            echo '</tr>';
+          }
+          if (!empty($fields[7])){
+            echo '<tr>';
+            echo '<td>'.$fields[0].'';
+            echo '<td>'.$fields[1].'';
+            echo '<td>'.$fields[2].'';
+            echo '<td>'.$fields[7].'';
+            echo '<td>'.$fields[8].'';
+            echo '</tr>';
+          }
+          if (!empty($fields[9])){
+            echo '<tr>';
+            echo '<td>'.$fields[0].'';
+            echo '<td>'.$fields[1].'';
+            echo '<td>'.$fields[2].'';
+            echo '<td>'.$fields[9].'';
+            echo '<td>'.$fields[10].'';
+            echo '</tr>';
+          }
+        if (!empty($fields[11])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[11].'';
+          echo '<td>'.$fields[12].'';
+          echo '</tr>';
+        }
+        if (!empty($fields[13])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[13].'';
+          echo '<td>'.$fields[14].'';
+          echo '</tr>';
+        }
+        if (!empty($fields[15])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[15].'';
+          echo '<td>'.$fields[16].'';
+          echo '</tr>';
+        }
+        if (!empty($fields[17])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[17].'';
+          echo '<td>'.$fields[18].'';
+          echo '</tr>';
+        }
+        if (!empty($fields[19])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[19].'';
+          echo '<td>'.$fields[20].'';
+          echo '</tr>';
+        }
+        if (!empty($fields[21])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[21].'';
+          echo '<td>'.$fields[22].'';
+          echo '</tr>';
+        }
+        if (!empty($fields[23])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[23].'';
+          echo '<td>'.$fields[24].'';
+          echo '</tr>';
+        }
+        if (!empty($fields[25])){
+          echo '<tr>';
+          echo '<td>'.$fields[0].'';
+          echo '<td>'.$fields[1].'';
+          echo '<td>'.$fields[2].'';
+          echo '<td>'.$fields[25].'';
+          echo '<td>'.$fields[26].'';
+          echo '</tr>';
+        }
+      };
+        ?>
+        </tbody>
+      </table>
       </div>
     </div>
   </div>

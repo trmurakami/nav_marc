@@ -148,6 +148,9 @@ function get_type($material_type){
   case "TRABALHO DE EVENTO-RESUMO":
       return "paper-conference";
       break;
+  case "TEXTO NA WEB":
+      return "post-weblog";
+      break;
   }
 }
 

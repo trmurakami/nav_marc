@@ -47,7 +47,7 @@
     $sort = array('year' => -1);
   /* Consultas */
     $query_json = json_encode($query);
-    $query_new = json_decode('[{"$match":'.$query_json.'},{"$lookup":{"from": "producao_bdpi", "localField": "_id", "foreignField": "_id", "as": "bdpi"}},{"$sort":{"year":-1}},{"$skip":'.$skip.'},{"$limit":'.$limit.'}]');
+    $query_new = json_decode('[{"$match":'.$query_json.'},{"$lookup":{"from": "producao_bdpi", "localField": "_id", "foreignField": "_id", "as": "bdpi"}},{"$sort":{"year":-1}},{"$limit":'.$limit.'}]');
     $query_count = json_decode('[{"$match":'.$query_json.'},{"$group":{"_id":null,"count":{"$sum": 1}}}]');
     $cursor = $c->aggregate($query_new);
     $total_count = $c->aggregate($query_count);
@@ -105,8 +105,9 @@
       ?>
     </div>
     <div>
-      <form method="post" action="result_report.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-        <button type="submit" name="page" class="ui icon button" value="$escaped_url">Gerar relatório</button>
+      <form method="post" action="generate_pdf.php">
+        <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+        <button type="submit" name="page" class="ui icon button" value="teste">Gerar relatório</button>
       </form>
     </div>
   </div>
