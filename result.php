@@ -151,9 +151,11 @@
   /* Pagination - End */
   ?>
 
-  <div>
+  <br/>  <br/>
+  <h3> Escolha o estilo da Citação:</h3>
+  <div class="ui compact menu">
     <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-      <button type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
+      <button  type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
     </form>
     <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
       <button type="submit" name="citation_style" class="ui icon button" value="abnt">ABNT</button>
