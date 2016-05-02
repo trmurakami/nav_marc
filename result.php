@@ -5,9 +5,16 @@
   include 'inc/header.php';
   include_once 'inc/functions.php';
 
+  if (empty($_SESSION["citation_style"])) {
+    $_SESSION["citation_style"]="abnt";
+  }
+  if (isset($_POST["citation_style"])) {
+    $_SESSION["citation_style"] = $_POST['citation_style'];
+  }
+
   /* Citeproc-PHP*/
   include 'inc/citeproc-php/CiteProc.php';
-  $csl = file_get_contents('inc/citeproc-php/style/abnt.csl');
+  $csl = file_get_contents('inc/citeproc-php/style/'.$_SESSION["citation_style"].'.csl');
   $lang = "br";
   $citeproc = new citeproc($csl,$lang);
   $mode = "reference";
@@ -143,6 +150,22 @@
   echo '</div>';
   /* Pagination - End */
   ?>
+
+  <div>
+    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+      <button type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
+    </form>
+    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+      <button type="submit" name="citation_style" class="ui icon button" value="abnt">ABNT</button>
+    </form>
+    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+      <button type="submit" name="citation_style" class="ui icon button" value="nlm">NLM</button>
+    </form>
+    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+      <button type="submit" name="citation_style" class="ui icon button" value="vancouver">Vancouver</button>
+    </form>
+  </div>
+
 <div class="ui divided items">
 <?php foreach ($cursor['result'] as $r): ?>
   <div class="item">
@@ -208,7 +231,7 @@
   <?php endif; ?>
   </div>
   <div class="extra" style="color:black;">
-    <h4>Como citar (ABNT)</h4>
+    <h4>Como citar (<?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>
     <?php
     $type = get_type($r['type']);
     $author_array = array();

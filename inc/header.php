@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt_BR">
+<?php session_start(); ?>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
