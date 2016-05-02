@@ -74,9 +74,9 @@
           <thead>
             <tr>
               <th>Campo</th>
-              <th>Indicador 1</th>
-              <th>Indicador 2</th>
-              <th>Sub-Campo</th>
+              <th>Ind. 1</th>
+              <th>Ind. 2</th>
+              <th>Subcampo</th>
               <th>Conteúdo</th>
             </tr>
           </thead>

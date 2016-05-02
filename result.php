@@ -171,7 +171,8 @@
   <div class="extra">
   <h4>Unidades USP:</h4>
   <?php if (!empty($r['unidadeUSP'])): ?>
-    <?php foreach ($r['unidadeUSP'] as $unidadeUSP): ?>
+    <?php $unique =  array_unique($r['unidadeUSP']); ?>
+    <?php foreach ($unique as $unidadeUSP): ?>
       <div class="ui label" style="color:black;"><i class="university icon"></i><a href="result.php?unidadeUSP=<?php echo $unidadeUSP;?>"><?php echo $unidadeUSP;?></a></div>
     <?php endforeach;?>
   <?php endif; ?>
