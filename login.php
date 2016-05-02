@@ -7,14 +7,6 @@ $tpTitle = 'Login - BDPI USP';
   include_once 'inc/functions.php';
 ?>
 <title><?php echo gettext("branch");?> - Login</title>
-<style type="text/css">
-    body > .grid {
-      height: 100%;
-    }
-    .column {
-      max-width: 450px;
-    }
-  </style>
   <script>
   $(document)
     .ready(function() {
@@ -56,7 +48,7 @@ $tpTitle = 'Login - BDPI USP';
 </head>
 <body>
 <div class="ui middle aligned center aligned grid">
-  <div class="column">
+  <div class="column1">
     <h2 class="ui teal image header">
       <div class="content">
         Login em sua conta

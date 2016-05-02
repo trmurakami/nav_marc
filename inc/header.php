@@ -297,7 +297,7 @@
             </div>
           </div>
           <div class="item">
-            <a class="ui button" href="admin/login.php">Login</a>
+            <a class="ui button" href="login.php">Login</a>
           </div>
         </div>
       </div>

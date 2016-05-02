@@ -1,5 +1,5 @@
 <?php
-  $tpTitle = 'BDPI USP - Resultado da Busca';
+  $tpTitle = 'BDPI USP - Relatório gerencial';
 
   include 'inc/config.php';
   include 'inc/header.php';
@@ -54,9 +54,81 @@
     $total = $total_count['result'][0]['count'];
 
 ?>
+
+<!-- D3.js Libraries and CSS -->
+<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.1.3"></script>
+<script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js?2.1.3"></script>
+<script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?2.1.3"></script>
+
+<style type="text/css">
+    .slice text {
+        font-size: 16pt;
+        font-family: Arial;
+    }
+</style>
+
 </head>
 <body>
   <div class="ui main container">
+    <div>
+      <h3>Tipo de publicação</h3>
+      <?php $type_mat = generateDataGraph($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
+      <div id="chart"></div>
+      <script type="text/javascript">
+      var w = 400;
+      var h = 400;
+      var r = h/2;
+      var color = d3.scale.category20c();
+
+      var data = [<?= $type_mat; ?>];
+
+
+      var vis = d3.select('#chart').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
+      var pie = d3.layout.pie().value(function(d){return d.value;});
+
+      // declare an arc generator function
+      var arc = d3.svg.arc().outerRadius(r);
+
+      // select paths, use arc generator to draw
+      var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+      arcs.append("svg:path")
+          .attr("fill", function(d, i){
+              return color(i);
+          })
+          .attr("d", function (d) {
+              // log the result of the arc generator to show how cool it is :)
+              console.log(arc(d));
+              return arc(d);
+          });
+
+      // add the text
+      arcs.append("svg:text").attr("transform", function(d){
+      			d.innerRadius = 0;
+      			d.outerRadius = r;
+          return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
+          return data[i].label;}
+      		);
+     </script>
+
+      <?php generateDataGraph($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
+    </div>
+    <br/>
+    <div>
+      <h3>Unidade USP - Participações</h3>
+      <?php generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
+    </div>
+    <br/>
+    <div>
+      <h3>Unidade USP - Trabalhos</h3>
+      <?php generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
+    </div>
+    <br/>
+    <div>
+      <h3>Departamento - Participações</h3>
+      <?php generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
+    </div>
+
+
   <div class="ui main two column stackable grid">
     <div class="four wide column">
       <div class="ui fluid vertical accordion menu">
@@ -104,224 +176,7 @@
         generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
       ?>
     </div>
-    <div>
-      <form method="post" action="generate_pdf.php">
-        <input type="hidden" name="extra_submit_param" value="extra_submit_value">
-        <button type="submit" name="page" class="ui icon button" value="teste">Gerar relatório</button>
-      </form>
-    </div>
   </div>
-  <div class="twelve wide column">
-
-
-
-    <div class="page-header"><h3>Resultado da busca <small><?php print_r($total);?></small></h3></div>
-
-  <?php
-  /* Pagination - Start */
-  echo '<div class="ui buttons">';
-  if ($page > 1) {
-      echo '<form method="post" action="'.$escaped_url.'">';
-      echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
-      echo '<button type="submit" name="page" class="ui labeled icon button active" value="'.$prev.'"><i class="left chevron icon"></i>Anterior</button>';
-      echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
-      if ($page * $limit < $total) {
-          echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
-      } else {
-          echo '<button class="ui right labeled icon button disabled">Próximo<i class="right chevron icon"></i></button>';
-      }
-      echo '</form>';
-  } else {
-      if ($page * $limit < $total) {
-          echo '<form method="post" action="'.$escaped_url.'">';
-          echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
-          echo '<button class="ui labeled icon button disabled"><i class="left chevron icon"></i>Anterior</button>';
-          echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
-          echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
-          echo '</form>';
-      }
-  }
-  echo '</div>';
-  /* Pagination - End */
-  ?>
-<div class="ui divided items">
-<?php foreach ($cursor['result'] as $r): ?>
-  <div class="item">
-    <div class="image">
-      <h4 class="ui center aligned icon header">
-        <i class="circular file icon"></i>
-        <?php if (!empty($r['ispartof'])): ?>
-        <a href="result.php?ispartof=<?php echo $r['ispartof'];?>"><?php echo $r['ispartof'];?></a> |
-        <?php endif; ?>
-        <a href="result.php?type=<?php echo $r['type'];?>"><?php echo $r['type'];?></a>
-        <br/><br/><br/>
-        <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['_id'];?>">Ver no Dedalus</a>
-      </h4>
-    </div>
-    <div class="content">
-      <a class="header" href="single.php?_id=<?php echo $r['_id'];?>"><?php echo $r['title'];?> (<?php echo $r['year']; ?>)</a>
-    <!--List authors -->
-    <div class="extra">
-    <h4>Autores:</h4>
-    <?php if (!empty($r['authors'])): ?>
-      <?php foreach ($r['authors'] as $autores): ?>
-        <div class="ui label" style="color:black;"><i class="user icon"></i><a href="result.php?authors=<?php echo $autores;?>"><?php echo $autores;?></a></div>
-      <?php endforeach;?>
-    <?php endif; ?>
-  </div>
-  <div class="extra">
-  <h4>Unidades USP:</h4>
-  <?php if (!empty($r['unidadeUSP'])): ?>
-    <?php foreach ($r['unidadeUSP'] as $unidadeUSP): ?>
-      <div class="ui label" style="color:black;"><i class="university icon"></i><a href="result.php?unidadeUSP=<?php echo $unidadeUSP;?>"><?php echo $unidadeUSP;?></a></div>
-    <?php endforeach;?>
-  <?php endif; ?>
-</div>
-  <div class="extra">
-    <h4>Assuntos:</h4>
-    <?php if (!empty($r['subject'])): ?>
-      <?php foreach ($r['subject'] as $assunto): ?>
-        <div class="ui label" style="color:black;"><i class="globe icon"></i><a href="result.php?subject=<?php echo $assunto;?>"><?php echo $assunto;?></a></div>
-      <?php endforeach;?>
-    <?php endif; ?>
-    <?php if (!empty($r['url'])): ?>
-      <?php foreach ($r['url'] as $url): ?>
-        <?php if ($url != ''): ?>
-          <br/><br/>
-        <a href="<?php echo $url;?>">
-          <div class="ui right floated primary button">
-            Acesso online
-            <i class="right chevron icon"></i>
-          </div>
-        </a>
-        <?php endif; ?>
-      <?php endforeach;?>
-    <?php endif; ?>
-  <?php if (!empty($r['doi'])): ?>
-    <br/><br/>
-    <a href="http://dx.doi.org/<?php echo $r['doi'][0];?>">
-    <div class="ui right floated primary button">
-      Acesso online
-      <i class="right chevron icon"></i>
-    </div></a>
-    <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
-  <?php endif; ?>
-  </div>
-  <div class="extra" style="color:black;">
-    <h4>Como citar (ABNT)</h4>
-    <?php
-    $type = get_type($r['type']);
-    $author_array = array();
-    foreach ($r['authors'] as $autor_citation){
-
-      $array_authors = explode(',', $autor_citation);
-      $author_array[] = '{"family":"'.$array_authors[0].'","given":"'.$array_authors[1].'"}';
-    };
-    $authors = implode(",",$author_array);
-
-    if (!empty($r['ispartof'])) {
-      $container = '"container-title": "'.$r['ispartof'].'",';
-    } else {
-      $container = "";
-    };
-    if (!empty($r['doi'])) {
-      $doi = '"DOI": "'.$r['doi'][0].'",';
-    } else {
-      $doi = "";
-    };
-
-    if (!empty($r['url'])) {
-      $url = '"URL": "'.$r['url'][0].'",';
-    } else {
-      $url = "";
-    };
-
-    if (!empty($r['publisher'])) {
-      $publisher = '"publisher": "'.$r['publisher'].'",';
-    } else {
-      $publisher = "";
-    };
-
-    if (!empty($r['publisher-place'])) {
-      $publisher_place = '"publisher-place": "'.$r['publisher-place'].'",';
-    } else {
-      $publisher_place = "";
-    };
-
-    $volume = "";
-    $issue = "";
-    $page_ispartof = "";
-
-    if (!empty($r['ispartof_data'])) {
-      foreach ($r['ispartof_data'] as $ispartof_data) {
-        if (strpos($ispartof_data, 'v.') !== false) {
-          $volume = '"publisher": "'.$ispartof_data.'",';
-        } elseif (strpos($ispartof_data, 'n.') !== false) {
-          $issue = '"issue": "'.str_replace("n.","",$ispartof_data).'",';
-        } elseif (strpos($ispartof_data, 'p.') !== false) {
-          $page_ispartof = '"page": "'.str_replace("p.","",$ispartof_data).'",';
-        }
-      }
-    }
-
-    $data = json_decode('{
-                "title": "'.$r['title'].'",
-                "type": "'.$type.'",
-                '.$container.'
-                '.$doi.'
-                '.$url.'
-                '.$publisher.'
-                '.$publisher_place.'
-                '.$volume.'
-                '.$issue.'
-                '.$page_ispartof.'
-                "issued": {
-                    "date-parts": [
-                        [
-                            "'.$r['year'].'"
-                        ]
-                    ]
-                },
-                "author": [
-                    '.$authors.'
-                ]
-            }');
-    $output = $citeproc->render($data, $mode);
-    print_r($output)
-    ?>
-  </div>
-  </div>
-  </div>
-<?php endforeach;?>
-</div>
-<?php
-/* Pagination - Start */
-echo '<div class="ui buttons">';
-if ($page > 1) {
-    echo '<form method="post" action="'.$escaped_url.'">';
-    echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
-    echo '<button type="submit" name="page" class="ui labeled icon button active" value="'.$prev.'"><i class="left chevron icon"></i>Anterior</button>';
-    echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
-    if ($page * $limit < $total) {
-        echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
-    } else {
-        echo '<button class="ui right labeled icon button disabled">Próximo<i class="right chevron icon"></i></button>';
-    }
-    echo '</form>';
-} else {
-    if ($page * $limit < $total) {
-        echo '<form method="post" action="'.$escaped_url.'">';
-        echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
-        echo '<button class="ui labeled icon button disabled"><i class="left chevron icon"></i>Anterior</button>';
-        echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
-        echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">Próximo<i class="right chevron icon"></i></button>';
-        echo '</form>';
-    }
-}
-echo '</div>';
-/* Pagination - End */
-?>
-</div>
 </div>
 </div>
 <?php
@@ -330,6 +185,11 @@ echo '</div>';
 <script>
 $('.ui.accordion')
   .accordion()
+;
+</script>
+<script>
+$('.menu .item')
+  .tab()
 ;
 </script>
 </body>

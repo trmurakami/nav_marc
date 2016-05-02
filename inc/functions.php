@@ -189,8 +189,43 @@ function get_last_records($c,$number){
   }
     echo '</div>';
 }
-echo '</div>';
-echo '</div>';
 
+
+/* Function to generate facets */
+function generateDataGraph($url, $c, $query, $facet_name, $sort_name, $sort_value, $facet_display_name, $limit)
+{
+    $aggregate_facet = array(
+    array(
+      '$match' => $query,
+    ),
+    array(
+      '$unwind' => $facet_name,
+    ),
+    array(
+      '$group' => array(
+        '_id' => $facet_name,
+        'count' => array('$sum' => 1),
+        ),
+    ),
+    array(
+      '$sort' => array($sort_name => $sort_value),
+    ),
+  );
+    $options = array('allowDiskUse' => true);
+    $facet = $c->aggregate($aggregate_facet, $options);
+
+
+    $i = 0;
+    $data_array= array();
+    foreach ($facet['result'] as $facets) {
+        array_push($data_array,'{"label":"'.$facets['_id'].'","value":'.$facets['count'].'}');
+        if (++$i > $limit) {
+            break;
+        }
+    };
+    $comma_separated = implode(",", $data_array);
+    return $comma_separated;
+
+};
 
 ?>
