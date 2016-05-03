@@ -12,6 +12,15 @@
     $_SESSION["citation_style"] = $_POST['citation_style'];
   }
 
+  if (empty($_SESSION["login_role"])) {
+    $_SESSION["login_role"]="annonymous";
+  }
+  if (isset($_POST["login_role"])) {
+    $_SESSION["login_role"] = $_POST['login_role'];
+  }
+
+
+
   /* Citeproc-PHP*/
   include 'inc/citeproc-php/CiteProc.php';
   $csl = file_get_contents('inc/citeproc-php/style/'.$_SESSION["citation_style"].'.csl');
@@ -90,30 +99,46 @@
       <?php
       /* Gerar facetas */
         generateFacet($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50);
+        if ($_SESSION['login_role'] == 'admin'){
         generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 100);
+        }
         generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 100);
+        if ($_SESSION['login_role'] == 'admin'){
         generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 50);
+        }
         generateFacet($url, $c, $query, '$departamentotrabalhos', 'count', -1, 'Departamento - Trabalhos', 50);
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
         if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
             generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
         }
+        if ($_SESSION['login_role'] == 'admin'){
         generateFacet($url, $c, $query, '$colab', 'count', -1, 'País dos autores externos à USP', 50);
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
         generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
         generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
-        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
+        }
+        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
         generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
         generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
         generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
+        if ($_SESSION['login_role'] == 'admin'){
         generateFacet($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50);
+        }
         generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
       ?>
     </div>
     <div>
       <form method="post" action="result_report.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
         <button type="submit" name="page" class="ui icon button" value="$escaped_url">Gerar relatório</button>
+      </form>
+      <br/><br/>
+      <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+        <button  type="submit" name="login_role" class="ui icon button" value="admin">Admin</button>
+      </form>
+      <br/>
+      <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+        <button  type="submit" name="login_role" class="ui icon button" value="annonymous">Anônimo</button>
       </form>
     </div>
   </div>
@@ -152,6 +177,7 @@
   ?>
 
   <br/>  <br/>
+
   <h3> Escolha o estilo da Citação:</h3>
   <div class="ui compact menu">
     <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
