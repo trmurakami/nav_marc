@@ -8,10 +8,9 @@
   /* Citeproc-PHP*/
   include 'inc/citeproc-php/CiteProc.php';
   $csl = file_get_contents('inc/citeproc-php/style/abnt.csl');
-  $lang = "br";
-  $citeproc = new citeproc($csl,$lang);
-  $mode = "reference";
-
+  $lang = 'br';
+  $citeproc = new citeproc($csl, $lang);
+  $mode = 'reference';
 
   /* Pegar a URL atual */
   if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
@@ -70,6 +69,11 @@
 </head>
 <body>
   <div class="ui main container">
+    <h3>Relatório com os seguintes parâmetros:
+    <?php foreach ($_GET as $filters): ?>
+      <?php echo $filters;?>
+    <?php endforeach;?>
+    </h3><br/><br/>
     <div class="ui equal width grid">
       <div class="column">
       <h3>Tipo de publicação</h3>

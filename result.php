@@ -280,7 +280,7 @@
     if (!empty($r['ispartof_data'])) {
       foreach ($r['ispartof_data'] as $ispartof_data) {
         if (strpos($ispartof_data, 'v.') !== false) {
-          $volume = '"publisher": "'.$ispartof_data.'",';
+          $volume = '"volume": "'.str_replace("v.","",$ispartof_data).'",';
         } elseif (strpos($ispartof_data, 'n.') !== false) {
           $issue = '"issue": "'.str_replace("n.","",$ispartof_data).'",';
         } elseif (strpos($ispartof_data, 'p.') !== false) {
