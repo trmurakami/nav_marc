@@ -27,6 +27,8 @@ marc_map('260b','publisher')
 marc_map('100a','authors.$append')
 # 1009 - Colaboração
 marc_map('1009','colab.$append')
+# 510 - Indexado em
+marc_map('510a','indexado.$append')
 # 650 - Assunto
 marc_map('650[ 7]a','subject.$append')
 # 700 - Autores
