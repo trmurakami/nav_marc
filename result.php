@@ -49,8 +49,16 @@
       }
       $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
       if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
-        $query["year"]["\$gt"] = $query["date_init"];
-        $query["year"]["\$lt"] = $query["date_end"];
+        if (array_key_exists("date_init", $query)) {
+          $query["year"]["\$gte"] = $query["date_init"];
+        } else {
+          $query["year"]["\$gte"] = "1";
+        }
+        if (array_key_exists("date_end", $query)) {
+        $query["year"]["\$lte"] = $query["date_end"];
+      } else {
+        $query["year"]["\$lte"] = "20500";
+      }
         unset($query["date_init"]);
         unset($query["date_end"]);
       }
@@ -60,8 +68,16 @@
           $query[$key] = $value;
       }
       if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
-        $query["year"]["\$gte"] = $query["date_init"];
+        if (array_key_exists("date_init", $query)) {
+          $query["year"]["\$gte"] = $query["date_init"];
+        } else {
+          $query["year"]["\$gte"] = "1";
+        }
+        if (array_key_exists("date_end", $query)) {
         $query["year"]["\$lte"] = $query["date_end"];
+      } else {
+        $query["year"]["\$lte"] = "20500";
+      }
         unset($query["date_init"]);
         unset($query["date_end"]);
       }
