@@ -180,6 +180,10 @@
         echo '<input type="hidden" name="'.$key.'" value="'.$value.'">';
       };
       ?>
+      <?php if (!empty($q)){
+        echo '<input type="hidden" name="category" value="buscaindice">';
+        echo '<input type="hidden" name="q" value="'.$q.'">';
+      }; ?>
       <button type="submit" class="ui icon button">Limitar datas</button>
     </form>
     <br/><br/>
