@@ -48,10 +48,22 @@
           $consult .= '"'.$key.'":"'.$value.'",';
       }
       $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
+      if (array_key_exists("date_init", $query)) {
+        $query["year"]["\$gt"] = $query["date_init"];
+        $query["year"]["\$lt"] = $query["date_end"];
+        unset($query["date_init"]);
+        unset($query["date_end"]);
+      }
   } else {
       $query = array();
       foreach ($_GET as $key => $value) {
           $query[$key] = $value;
+      }
+      if (array_key_exists("date_init", $query)) {
+        $query["year"]["\$gt"] = $query["date_init"];
+        $query["year"]["\$lt"] = $query["date_end"];
+        unset($query["date_init"]);
+        unset($query["date_end"]);
       }
   }
   /* Pagination variables */
@@ -70,6 +82,7 @@
     $total = $total_count['result'][0]['count'];
 
 ?>
+<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
 </head>
 <body>
   <div class="ui main container">
@@ -129,9 +142,32 @@
         generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
       ?>
     </div>
+
+    <h3>Filtrar por data</h3>
+    <form method="get" action="<?php echo $escaped_url; ?>">
+      <div class="ui calendar" id="date_init">
+        <div class="ui input left icon">
+          <i class="time icon"></i>
+          <input type="text" placeholder="Ano inicial" name="date_init">
+        </div>
+      </div>
+      <div class="ui calendar" id="date_end">
+        <div class="ui input left icon">
+          <i class="time icon"></i>
+          <input type="text" placeholder="Ano final" name="date_end">
+        </div>
+      </div>
+      <?php foreach ($_GET as $key=>$value) {
+        echo '<input type="hidden" name="'.$key.'" value="'.$value.'">';
+      };
+      ?>
+      <button type="submit" class="ui icon button">Limitar datas</button>
+    </form>
+    <br/><br/>
+
     <div>
       <form method="post" action="result_report.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-        <button type="submit" name="page" class="ui icon button" value="$escaped_url">Gerar relatório</button>
+        <button type="submit" name="page" class="ui icon button" value="<?php echo $escaped_url;?>">Gerar relatório</button>
       </form>
       <br/><br/>
       <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
@@ -383,6 +419,16 @@ echo '</div>';
 $('.ui.accordion')
   .accordion()
 ;
+</script>
+<script>
+$('#date_init').calendar({
+type: 'year'
+});
+</script>
+<script>
+$('#date_end').calendar({
+type: 'year'
+});
 </script>
 </body>
 </html>

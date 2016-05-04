@@ -39,7 +39,7 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
   <div class="six wide column">
     <?php
       if (!empty($m)) {
-          generateUnidadeUSPInit($c, '$unidadeUSPtrabalhos', '_id', 1, 'Unidade USP', 100, '#');
+          generateUnidadeUSPInit($c, '$unidadeUSPtrabalhos', '_id', 1, 'Unidades USP', 100, '#');
       };
     ?>
   </div>
