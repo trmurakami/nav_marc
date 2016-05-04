@@ -60,8 +60,8 @@
           $query[$key] = $value;
       }
       if (array_key_exists("date_init", $query)) {
-        $query["year"]["\$gt"] = $query["date_init"];
-        $query["year"]["\$lt"] = $query["date_end"];
+        $query["year"]["\$gte"] = $query["date_init"];
+        $query["year"]["\$lte"] = $query["date_end"];
         unset($query["date_init"]);
         unset($query["date_end"]);
       }
