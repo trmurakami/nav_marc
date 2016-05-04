@@ -19,24 +19,36 @@
       $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
   }
     $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
-  /* Query */
-  if (empty($_GET)) {
-      $query = json_decode('{}');
-  } elseif (!empty($_GET['category'])) {
-      unset($_GET['category']);
-      $q = str_replace('"', '\\"', $_GET['q']);
-      unset($_GET['q']);
-      $consult = '';
-      foreach ($_GET as $key => $value) {
-          $consult .= '"'.$key.'":"'.$value.'",';
-      }
-      $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
-  } else {
-      $query = array();
-      foreach ($_GET as $key => $value) {
-          $query[$key] = $value;
-      }
-  }
+    /* Query */
+    if (empty($_GET)) {
+        $query = json_decode('{}');
+    } elseif (!empty($_GET['category'])) {
+        unset($_GET['category']);
+        $q = str_replace('"', '\\"', $_GET['q']);
+        unset($_GET['q']);
+        $consult = '';
+        foreach ($_GET as $key => $value) {
+            $consult .= '"'.$key.'":"'.$value.'",';
+        }
+        $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
+        if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
+          $query["year"]["\$gt"] = $query["date_init"];
+          $query["year"]["\$lt"] = $query["date_end"];
+          unset($query["date_init"]);
+          unset($query["date_end"]);
+        }
+    } else {
+        $query = array();
+        foreach ($_GET as $key => $value) {
+            $query[$key] = $value;
+        }
+        if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
+          $query["year"]["\$gte"] = $query["date_init"];
+          $query["year"]["\$lte"] = $query["date_end"];
+          unset($query["date_init"]);
+          unset($query["date_end"]);
+        }
+    }
   /* Pagination variables */
     $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
     $limit = 15;
