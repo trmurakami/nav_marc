@@ -97,14 +97,17 @@
           <div class="active content">
             <div class="ui form">
               <div class="grouped fields">
-                <?php foreach ($_GET as $filters): ?>
+                <form method="get" action="result.php">
+                <?php foreach ($_GET as $key=>$value): ?>
                     <div class="field">
                     <div class="ui checkbox">
-                      <input type="checkbox" name="<?php echo $filters;?>">
-                    <label><?php echo $filters;?></label>
+                      <input type="checkbox" checked="checked"  name="<?php echo $key; ?>" value="<?php echo $value; ?>">
+                    <label><?php echo $value; ?></label>
                     </div>
                 </div>
                 <?php endforeach;?>
+                <button type="submit" class="ui icon button">Retirar filtros</button>
+              </form>
               </div>
             </div>
           </div>
@@ -429,6 +432,10 @@ type: 'year'
 $('#date_end').calendar({
 type: 'year'
 });
+</script>
+<script>
+$('.ui.checkbox')
+  .checkbox();
 </script>
 </body>
 </html>
