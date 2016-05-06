@@ -89,7 +89,7 @@
 
 <style type="text/css">
     .slice text {
-        font-size: 6pt;
+        font-size: 8pt;
         font-family: Arial;
     }
 </style>

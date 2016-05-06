@@ -25,6 +25,10 @@ marc_map('260b','publisher')
 
 # 100 - Autores
 marc_map('100a','authors.$append')
+# 1007 - Colaboração - Internacionalização
+marc_map('1007','colab_int.$append')
+# 1008 - Colaboração - Instituição
+marc_map('1008','colab_instituicao.$append')
 # 1009 - Colaboração
 marc_map('1009','colab.$append')
 # 510 - Indexado em
@@ -33,6 +37,10 @@ marc_map('510a','indexado.$append')
 marc_map('650[ 7]a','subject.$append')
 # 700 - Autores
 marc_map('700a','authors.$append')
+# 7007 - Colaboração - Internacionalização
+marc_map('7007','colab_int.$append')
+# 7008 - Colaboração - Instituição
+marc_map('7008','colab_instituicao.$append')
 # 7009 - Colaboração
 marc_map('7009','colab.$append')
 # 711 - Nome do evento

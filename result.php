@@ -145,6 +145,8 @@
         }
         if ($_SESSION['login_role'] == 'admin'){
         generateFacet($url, $c, $query, '$colab', 'count', -1, 'País dos autores externos à USP', 50);
+        generateFacet($url, $c, $query, '$colab_int', 'count', -1, 'Colaboração - Internacionalização', 50);
+        generateFacet($url, $c, $query, '$colab_instituicao', 'count', -1, 'Colaboração - Instituição', 50);
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
         generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
         generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
