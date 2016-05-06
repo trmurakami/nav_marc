@@ -43,6 +43,15 @@ marc_map('7007','colab_int.$append')
 marc_map('7008','colab_instituicao.$append')
 # 7009 - Colaboração
 marc_map('7009','colab.$append')
+
+# Colaboração - Instituição - Trabalhos
+copy_field("colab_instituicao","colab_instituicao_trab")
+uniq(colab_instituicao_trab)
+
+# Colaboração - Internacionalização - Trabalhos
+copy_field("colab_int","colab_int_trab")
+uniq(colab_int_trab)
+
 # 711 - Nome do evento
 marc_map('711a','evento.$append')
 # 773t - É parte de
