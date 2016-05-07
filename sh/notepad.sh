@@ -24,3 +24,6 @@ db.producao.createIndex( { year: 1 } )
 db.producao.createIndex( { language: 1 } )
 db.producao.createIndex( { internacionalizacao: 1 } )
 db.producao.createIndex( { country: 1 } )
+
+
+mongoexport --db sibi --collection producao --type=csv --fields _id,colab_instituicao_trab --query '{ year: { $gte: "2010", $lte: "2015" } }' --out ../data/colab_instituicao.csv
