@@ -21,8 +21,8 @@ IFS=$'\n'       # make newlines the only separator
 for line in $(cat $1);
 do
 
-echo $i
-i=(($i+1))
+  echo $i
+  i=$((i+1))
 
 line=$(printf "%s\n" "$line" | sed "s/\"\",\"\"/|/g" | sed 's/,\"\[\"\"/#/g' | sed 's/\"\"\]\"//g' )
 _id=$(printf "%s\n" "$line" | cut -d "#" -f 1 | sed 's/\"//g')
