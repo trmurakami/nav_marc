@@ -27,3 +27,5 @@ db.producao.createIndex( { country: 1 } )
 
 
 mongoexport --db sibi --collection producao --type=csv --fields _id,colab_instituicao_trab --query '{ year: { $gte: "2010", $lte: "2015" } }' --out ../data/colab_instituicao.csv
+
+mongoexport --db sibi --collection producao --type=csv --fields _id,colab_instituicao_corrigido --query '{ colab_instituicao_corrigido: { $exists: true } }' --out ../data/colab_instituicao_corrigido.csv
