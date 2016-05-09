@@ -21,7 +21,7 @@ IFS=$'\n'       # make newlines the only separator
 for line in $(cat $1);
 do
 
-counter=counter+1
+counter=$counter+1
 echo $counter
 
 line=$(printf "%s\n" "$line" | sed "s/\"\",\"\"/|/g" | sed 's/,\"\[\"\"/#/g' | sed 's/\"\"\]\"//g' )
