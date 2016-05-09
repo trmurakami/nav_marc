@@ -15,20 +15,20 @@ consulta_termo() {
   vocabci_result=$(curl -s -G -L $url2 | xmlstarlet sel -t -v "//string")
 }
 
+i=1
 
-
-i=1;
 IFS=$'\n'       # make newlines the only separator
 for line in $(cat $1);
 do
-echo $i;
-i=$((i+1));
 
-
+echo $i
+i=(($i+1))
 
 line=$(printf "%s\n" "$line" | sed "s/\"\",\"\"/|/g" | sed 's/,\"\[\"\"/#/g' | sed 's/\"\"\]\"//g' )
 _id=$(printf "%s\n" "$line" | cut -d "#" -f 1 | sed 's/\"//g')
 instituicao=$(printf "%s\n" "$line" | cut -d "#" -f 2 )
+
+
 
 consulta_termo $instituicao_limpa
 
