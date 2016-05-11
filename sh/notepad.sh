@@ -13,6 +13,7 @@ db.producao.createIndex( { colab_int: 1 } )
 db.producao.createIndex( { colab_int_trab: 1 } )
 db.producao.createIndex( { colab_instituicao: 1 } )
 db.producao.createIndex( { colab_instituicao_trab: 1 } )
+db.producao.createIndex( { colab_instituicao_corrigido: 1 } )
 db.producao.createIndex( { authorUSP: 1 } )
 db.producao.createIndex( { codpesbusca: 1 } )
 db.producao.createIndex( { codpes: 1 } )
@@ -26,6 +27,12 @@ db.producao.createIndex( { internacionalizacao: 1 } )
 db.producao.createIndex( { country: 1 } )
 
 
-mongoexport --db sibi --collection producao --type=csv --fields _id,colab_instituicao_trab --query '{ year: { $gte: "2010", $lte: "2015" } }' --out ../data/colab_instituicao.csv
+#mongoexport --db sibi --collection producao --type=csv --fields _id,colab_instituicao_trab --query '{ year: { $gte: "2010", $lte: "2015" } }' --out ../data/colab_instituicao.csv
 
-mongoexport --db sibi --collection producao --type=csv --fields _id,colab_instituicao_corrigido --query '{ colab_instituicao_corrigido: { $exists: true } }' --out ../data/colab_instituicao_corrigido.csv
+#mongoexport --db sibi --collection producao --type=csv --fields _id,colab_instituicao_corrigido --query '{ colab_instituicao_corrigido: { $exists: true } }' --out ../data/colab_instituicao_corrigido.csv
+
+
+mongoexport --db sibi --collection producao --fields _id,colab_instituicao_trab --query '{ colab_instituicao_trab: { $exists: true } }' --out ../data/colab_instituicao.json
+
+
+mongoexport --db sibi --collection producao --fields _id,colab_instituicao_corrigido --query '{ colab_instituicao_corrigido: { $exists: true } }' --out ../data/colab_instituicao_corrigido.json
