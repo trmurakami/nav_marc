@@ -241,15 +241,14 @@
   <div  class="ui main container">
     <div class="ui two column stackable grid">
       <div class="ten wide column">
-      <h1 class="ui header"><a href="index.php"><img class="ui fluid image" src="inc/images/producao.usp.png"></a></h1>
+      <h1 class="ui header">IUSDATA</h1>
     </div>
     <div class="six wide column">
       <p>
-        <b>Departamento Técnico do Sistema Integrado de Bibliotecas</b><br/>
-        Rua da Biblioteca, S/N - Complexo Brasiliana<br/>
-        05508-050 - Cidade Universitária, São Paulo, SP - Brasil<br/>
-        Tel: (0xx11) 2648-0948<br/>
-        E-mail: atendimento@sibi.usp.br
+        <b>Universidade de São Paulo</b><br/>
+        <b>Faculdade de Direito</b><br/>
+        <b>Serviço de Biblioteca e Documentação (SBD)</b><br/>
+        <a href="http://www.direito.usp.br/biblifd/">http://www.direito.usp.br/biblifd/</a><br/>
       </p>
     </div>
   </div>

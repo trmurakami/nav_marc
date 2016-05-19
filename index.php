@@ -9,13 +9,7 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
 <div class="ui main container">
 <div class="ui two column stackable grid">
   <div class="ten wide column">
-    <div class="overlay">
-      <div class="ui labeled icon vertical menu">
-        <a class="item" href="https://twitter.com/home?status=<?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>"><i class="twitter icon"></i> Tweet</a>
-        <a class="item" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>"><i class="facebook icon"></i> Share</a>
-      </div>
-    </div>
-    <p>A Biblioteca Digital da Produção Intelectual da Universidade de São Paulo (BDPI) é um sistema de gestão e disseminação da produção científica, acadêmica, técnica e artística gerada pelas pesquisas desenvolvidas na USP.</p>
+    <p>Iusdata é uma base de artigos em direito...</p>
     <div class="ui vertical stripe segment" id="search">
       <div class="ui main container">
         <h3 class="ui header">Buscar</h3>
@@ -36,12 +30,60 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
     </div>
     <?php get_last_records($c,15); ?>
   </div>
+
   <div class="six wide column">
-    <?php
-      if (!empty($m)) {
-          generateUnidadeUSPInit($c, '$unidadeUSPtrabalhos', '_id', 1, 'Unidades USP', 100, '#');
+  <?php
+  /* Cria as consultas para o aggregate */
+
+  function generateFacetInitIusdata($c, $facet_name, $sort_name, $sort_value, $facet_display_name, $limit, $link)
+  {
+      $aggregate_facet_init = array(
+      array(
+        '$unwind' => $facet_name,
+      ),
+      array(
+        '$group' => array(
+          '_id' => $facet_name,
+          'count' => array('$sum' => 1),
+          ),
+      ),
+      array(
+        '$sort' => array($sort_name => $sort_value),
+      ),
+    );
+
+      $facet_init = $c->aggregate($aggregate_facet_init);
+
+      echo '<h3><a href="'.$link.'">'.$facet_display_name.'</a></h3>';
+      echo '<div class="ui horizontal list">';
+      $i = 0;
+      foreach ($facet_init['result'] as $facets) {
+          echo '<div class="item">
+          <div class="content">
+          <div class="ui labeled button" tabindex="0">
+          <div class="header">
+            <a href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a>
+          </div>
+          ('.$facets['count'].')
+          </div></div>
+          </div>';
+          if (++$i > $limit) {
+              break;
+          }
       };
-    ?>
+      echo '</div>';
+  };
+
+  generateFacetInitIusdata($c, '$ispartof', 'count', -1, 'Periódicos indexados', 50, '#');
+  generateFacetInitIusdata($c, '$year', '_id', -1, 'Ano de publicação', 100, '#');
+  generateFacetInitIusdata($c, '$subject', 'count', -1, 'Principais assuntos', 20, '#');
+
+
+  ?>
+
+
+
+
   </div>
 </div>
 </div>

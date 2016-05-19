@@ -132,38 +132,22 @@
       /* Gerar facetas */
         generateFacet($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50);
         if ($_SESSION['login_role'] == 'admin'){
-        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 100);
+        generateFacet($url, $c, $query, '$departamentoFD', 'count', -1, 'Departamento FD', 100);
         }
-        generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 100);
-        if ($_SESSION['login_role'] == 'admin'){
-        generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 50);
-        }
-        generateFacet($url, $c, $query, '$departamentotrabalhos', 'count', -1, 'Departamento - Trabalhos', 50);
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
-        if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
-            generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
-        }
+        generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
         if ($_SESSION['login_role'] == 'admin'){
-        generateFacet($url, $c, $query, '$colab', 'count', -1, 'País dos autores externos à USP', 50);
-        generateFacet($url, $c, $query, '$colab_int', 'count', -1, 'Colaboração - Internacionalização - Participações', 50);
-        generateFacet($url, $c, $query, '$colab_int_trab', 'count', -1, 'Colaboração - Internacionalização - Trabalhos', 50);
-        generateFacet($url, $c, $query, '$colab_instituicao', 'count', -1, 'Colaboração - Instituição', 50);
-        generateFacet($url, $c, $query, '$colab_instituicao_trab', 'count', -1, 'Colaboração - Instituição - Trabalhos', 50);
-        generateFacet($url, $c, $query, '$colab_instituicao_corrigido', 'count', -1, 'Colaboração - Instituição - Corrigido', 100);
-        generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
-        generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
-        generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
-        generateFacet($url, $c, $query, '$indexado', 'count', -1, 'Indexado em:', 50);
         }
         generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
-        generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
         generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
+        generateFacet($url, $c, $query, '$paginacao', 'count', -1, 'Páginação', 50);
+        generateFacet($url, $c, $query, '$volume', 'count', -1, 'Volume', 50);
+        generateFacet($url, $c, $query, '$numeracao', 'count', -1, 'Numeração', 50);
+        generateFacet($url, $c, $query, '$mes', 'count', -1, 'Mês', 50);
         generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
-        if ($_SESSION['login_role'] == 'admin'){
-        generateFacet($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50);
-        }
-        generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
+        generateFacet($url, $c, $query, '$revisado', 'count', -1, 'Revisado', 50);
+        generateFacet($url, $c, $query, '$producao', 'count', -1, 'Produção científica', 50);
       ?>
     </div>
 

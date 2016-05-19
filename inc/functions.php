@@ -163,17 +163,7 @@ function get_last_records($c,$number){
   echo '<div class="ui divided items">';
   foreach ($last_records as $r){
     #print_r($r);
-    echo '<div class="item">
-            <div class="ui tiny image">';
-      if (!empty($r['unidadeUSP'])) {
-        $file = 'inc/images/logosusp/'.$r['unidadeUSP'][0].'.jpg';
-      }
-      if (file_exists($file)) {
-            echo '<img src="'.$file.'"></a>';
-        } else {
-            #echo ''.$r['unidadeUSP'].'</a>';
-      };
-    echo '</div>';
+    echo '<div class="item">';
     echo '<div class="content">';
     if (!empty($r['title'])){
       echo '<a class="header" href="single.php?_id='.$r['_id'].'">'.$r['title'].' ('.$r['year'].')</a>';
