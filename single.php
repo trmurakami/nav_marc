@@ -4,9 +4,14 @@
   include 'inc/config.php';
   include 'inc/header.php';
 
-  #Consultas
-  $query = json_decode('[{"$match":{"_id":"'.$_GET["_id"].'"}},{"$lookup":{"from": "producao_bdpi", "localField": "_id", "foreignField": "_id", "as": "files"}}]');
-  $cursor = $c->aggregate($query);
+  if (is_numeric($_GET["_id"])) {
+    $cursor = $c->findOne(array('_id' => $_GET["_id"]));
+  } else {
+    $mongoid = $_GET["_id"];
+    $realmongoid = new MongoId($mongoid);
+    $cursor = $c->findOne(array('_id' => $realmongoid));
+  }
+
 ?>
 </head>
 <body>
@@ -18,19 +23,19 @@
     <div class="ten wide column">
       <h2 class="ui center aligned icon header">
         <i class="circular file icon"></i>
-        Detalhes do registro / <?php echo ''.$cursor["result"][0]["type"].''; ?>
+        Detalhes do registro / <?php echo ''.$cursor["type"].''; ?>
       </h2>
       <div class="ui top attached tabular menu">
         <a class="item active" data-tab="first">Visualização</a>
         <a class="item" data-tab="second">Registro Completo</a>
       </div>
       <div class="ui bottom attached tab segment active" data-tab="first">
-        <h2><?php echo $cursor["result"][0]['title'];?> (<?php echo $cursor["result"][0]['year']; ?>)</h2>
+        <h2><?php echo $cursor['title'];?> (<?php echo $cursor['year']; ?>)</h2>
         <!--List authors -->
         <div class="ui middle aligned selection list">
-          <?php if (!empty($cursor["result"][0]['authors'])): ?>
+          <?php if (!empty($cursor['authors'])): ?>
             <h4>Autor(es):</h4>
-            <?php foreach ($cursor["result"][0]['authors'] as $autores): ?>
+            <?php foreach ($cursor['authors'] as $autores): ?>
               <div class="item">
                 <i class="user icon"></i>
                 <div class="content">
@@ -42,9 +47,9 @@
         </div>
         <!--Unidades USP -->
         <div class="ui middle aligned selection list">
-          <?php if (!empty($cursor["result"][0]['unidadeUSP'])): ?>
+          <?php if (!empty($cursor['unidadeUSP'])): ?>
             <h4>Unidades USP:</h4>
-            <?php foreach ($cursor["result"][0]['unidadeUSP'] as $unidadeUSP): ?>
+            <?php foreach ($cursor['unidadeUSP'] as $unidadeUSP): ?>
               <div class="item">
                 <i class="user icon"></i>
                 <div class="content">
@@ -56,9 +61,9 @@
         </div>
         <!--Assuntos -->
         <div class="ui middle aligned selection list">
-          <?php if (!empty($cursor["result"][0]['subject'])): ?>
+          <?php if (!empty($cursor['subject'])): ?>
             <h4>Assuntos:</h4>
-            <?php foreach ($cursor["result"][0]['subject'] as $subject): ?>
+            <?php foreach ($cursor['subject'] as $subject): ?>
               <div class="item">
                 <i class="user icon"></i>
                 <div class="content">
@@ -68,6 +73,13 @@
             <?php endforeach;?>
           <?php endif; ?>
         </div>
+<?php if ($_SESSION['login_role'] == 'admin') : ?>
+<form action="delete.php" method="GET" class="ui form">
+  <input type="radio" name="_id" id="radio_id" tabindex="0" class="hidden" value="<?php echo $_GET["_id"];  ?>" checked>
+  <button type="submit" class="btn btn-primary">Excluir registro</button>
+</form>
+<?php endif; ?>
+
       </div>
       <div class="ui bottom attached tab segment" data-tab="second">
         <table class="ui celled table">
@@ -81,7 +93,7 @@
             </tr>
           </thead>
         <tbody>
-        <?php foreach ($cursor["result"][0]["record"] as $fields){
+        <?php foreach ($cursor["record"] as $fields){
           echo '<tr>';
           echo '<td>'.$fields[0].'';
           echo '<td>'.$fields[1].'';

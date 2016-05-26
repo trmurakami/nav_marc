@@ -253,8 +253,6 @@
         <a href="result.php?ispartof=<?php echo $r['ispartof'];?>"><?php echo $r['ispartof'];?></a> |
         <?php endif; ?>
         <a href="result.php?type=<?php echo $r['type'];?>"><?php echo $r['type'];?></a>
-        <br/><br/><br/>
-        <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $r['_id'];?>">Ver no Dedalus</a>
       </h4>
     </div>
     <div class="content">
